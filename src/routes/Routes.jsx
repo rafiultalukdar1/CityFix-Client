@@ -4,6 +4,8 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/AuthPage/Login/Login";
 import Register from "../pages/AuthPage/Register/Register";
 import PrivetRoute from "./PrivetRoute";
+import About from "../pages/AboutPage/About";
+import HowWorkPage from "../pages/HowWorkPage/HowWorkPage";
 
 export const router = createBrowserRouter([
     {
@@ -20,11 +22,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/how-it-works',
-                element: <h2 className='text-5xl font-bold text-center py-15'>How It Works</h2>
+                Component: HowWorkPage
             },
             {
                 path: '/about-us',
-                element: <PrivetRoute><h2 className='text-5xl font-bold text-center py-15'>About Us</h2></PrivetRoute>
+                Component: About,
             },
             {
                 path: '/login',

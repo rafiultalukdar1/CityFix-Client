@@ -1,8 +1,7 @@
 import React from 'react';
 import { FaAward } from 'react-icons/fa6';
 import { IoArrowForwardOutline } from 'react-icons/io5';
-import bannerImg from '../../../assets/images/banner.jpg'
-import { FaUserFriends } from 'react-icons/fa';
+import bannerImg from '../../../assets/images/banner.jpg';
 
 const Banner = () => {
 

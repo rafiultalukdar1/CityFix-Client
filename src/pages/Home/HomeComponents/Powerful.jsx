@@ -14,7 +14,7 @@ const Powerful = () => {
 
     return (
         <>
-            <div className='py-[55px] md:py-[70px] lg:py-[105px]'>
+            <div className='py-[55px] md:py-[70px] lg:py-[95px]'>
                 <div className='container'>
                     <h2 className='text-center text-[30px] sm:text-[40px] lg:text-[50px] font-bold'>Powerful Features</h2>
                     <p className='text-[16px] md:text-[18px] font-medium text-[#6D7873] text-center'>Everything you need to report and track infrastructure issues efficiently.</p>
