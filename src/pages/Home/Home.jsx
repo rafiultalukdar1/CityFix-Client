@@ -1,9 +1,14 @@
 import React from 'react';
+import Banner from './HomeComponents/Banner';
+import RecentlResolved from './HomeComponents/RecentlResolved';
+import Powerful from './HomeComponents/Powerful';
 
 const Home = () => {
     return (
         <>
-            <h2 className='text-5xl font-bold text-center py-15'>Home</h2>
+            <Banner></Banner>
+            <RecentlResolved></RecentlResolved>
+            <Powerful></Powerful>
         </>
     );
 };
