@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+body {
+  font-family: "Inter", sans-serif;
+}
+
+nav a {
+  @apply text-[18px] font-semibold text-black dark:text-white;
+}
+
+nav a.active {
+  color: #219E64;
+}
+
+.form-label {
+  @apply label text-[#001931] dark:text-white text-[18px] font-semibold pt-2;
+}
+
+.form-input {
+  @apply w-full px-[15px] py-2 text-[#464545] text-[15px] outline-0 border border-[#219e648f] focus:border-[#219E64] bg-[#F3F3F3] rounded;
+
+  @apply dark:text-[#F3F3F3] dark:bg-gray-900 dark:border-[#219E6480] dark:focus:border-[#219E64];
+}
+
+.google-button {
+  @apply flex items-center justify-center gap-2 w-full border border-[#219E64] py-2 duration-200 bg-white dark:bg-gray-900 dark:text-white hover:bg-[#219e6438] rounded text-[15px] text-[#141414] font-medium;
+}
+
+.login-nav a.active {
+  background: #219E64;
+  color: #fff;
+}
+
+button {
+  cursor: pointer;
+}
+
+.divider::before,
+.divider::after {
+  background: #219E64;
+  height: 1px;
+}
