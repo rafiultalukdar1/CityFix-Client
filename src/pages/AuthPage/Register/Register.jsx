@@ -14,23 +14,20 @@ const Register = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
+    // Form Register
     const handleRegister = (data) => {
         const profileImg = data.photo[0];
-
         createUser(data.email, data.password)
             .then(() => {
                 const formData = new FormData();
                 formData.append('image', profileImg);
-
                 const img_Api_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_KEY}`;
-
                 axios.post(img_Api_URL, formData)
                     .then(res => {
                         const userProfile = {
                             displayName: data.name,
                             photoURL: res.data.data.display_url,
                         };
-
                         updateUserProfile(userProfile)
                             .then(() => {
                                 navigate(location.state || '/');
@@ -46,6 +43,7 @@ const Register = () => {
             });
     };
 
+    // Google Register
     const handleGoogleSignIn = () => {
         signWithGoogle()
             .then(() => {
@@ -67,7 +65,7 @@ const Register = () => {
                     <form onSubmit={handleSubmit(handleRegister)} className='mt-5'>
                         <label className="form-label">Your Name</label>
                         <input
-                            {...register('name', { required: '* Name is required' })}
+                            {...register('name', { required: '*Name is required' })}
                             className='form-input'
                             type="text"
                             placeholder="Enter your name"
@@ -76,13 +74,13 @@ const Register = () => {
                         <label className="form-label">Your Profile</label>
                         <input
                             type="file"
-                            {...register('photo', { required: '* Photo is required' })}
+                            {...register('photo', { required: '*Photo is required' })}
                             className="file-input w-full text-[#464545] text-[15px] outline-0 border border-[#219e648f] focus:border-[#219E64] bg-[#F3F3F3] rounded dark:text-[#F3F3F3] dark:bg-gray-900 dark:border-[#219E6480] dark:focus:border-[#219E64]"
                         />
                         {errors.photo && <p className="text-red-500 text-sm">{errors.photo.message}</p>}
                         <label className="form-label">Email address</label>
                         <input
-                            {...register('email', { required: '* Email is required' })}
+                            {...register('email', { required: '*Email is required' })}
                             className='form-input'
                             type="email"
                             placeholder="Enter your email address"
@@ -92,11 +90,11 @@ const Register = () => {
                         <div className='relative'>
                             <input
                                 {...register('password', {
-                                    required: '* Password is required',
-                                    minLength: { value: 6, message: '* Minimum length 6 characters' },
+                                    required: '*Password is required',
+                                    minLength: { value: 6, message: '*Minimum length 6 characters' },
                                     pattern: {
                                         value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])/,
-                                        message: '* Must include uppercase, lowercase & special character'
+                                        message: '*Must include uppercase, lowercase & special character'
                                     }
                                 })}
                                 className='form-input'

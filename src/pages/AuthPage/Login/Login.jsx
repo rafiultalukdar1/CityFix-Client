@@ -13,6 +13,7 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
+    // Form Login
     const handleLogin = (data) => {
         signInUser(data.email, data.password)
             .then(() => {
@@ -24,6 +25,7 @@ const Login = () => {
             });
     };
 
+    // Google Login
     const handleGoogleSignIn = () => {
         signWithGoogle()
             .then(() => {
@@ -46,7 +48,7 @@ const Login = () => {
 
                         <label className="form-label">Email address</label>
                         <input
-                            {...register('email', { required: '* Email is required' })}
+                            {...register('email', { required: '*Email is required' })}
                             className='form-input'
                             type="email"
                             placeholder="Enter your email address"
@@ -56,7 +58,7 @@ const Login = () => {
                         <label className="form-label">Password</label>
                         <div className='relative'>
                             <input
-                                {...register('password', { required: '* Password is required' })}
+                                {...register('password', { required: '*Password is required' })}
                                 className='form-input'
                                 type={showPass ? 'text' : 'password'}
                                 placeholder="Enter your password"
