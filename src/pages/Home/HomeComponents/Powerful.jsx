@@ -4,12 +4,12 @@ import { FaFileAlt, FaSearch, FaBell, FaChartBar, FaBolt, FaAward } from 'react-
 const Powerful = () => {
 
     const stats = [
-        { icon: <FaFileAlt className="text-[#0DA2E7] w-4.5 h-4.5" />, title: 'Easy Reporting', description: 'Submit issues in seconds with photos and location details.' },
-        { icon: <FaSearch className="text-[#0DA2E7] w-4.5 h-4.5" />, title: 'Real-time Tracking', description: 'Track your reported issues from submission to resolution.' },
-        { icon: <FaBell className="text-[#0DA2E7] w-4.5 h-4.5" />, title: 'Instant Updates', description: 'Get notified when your issue status changes.' },
-        { icon: <FaChartBar className="text-[#0DA2E7] w-4.5 h-4.5" />, title: 'Analytics Dashboard', description: 'View detailed statistics and reports on city issues.' },
-        { icon: <FaBolt className="text-[#0DA2E7] w-4.5 h-4.5" />, title: 'Priority Boost', description: 'Boost your issue priority for faster resolution.' },
-        { icon: <FaAward className="text-[#0DA2E7] w-4.5 h-4.5" />, title: 'Premium Support', description: 'Get unlimited reports and priority support with premium.' },
+        { icon: <FaFileAlt className="text-[#219E64] w-4.5 h-4.5" />, title: 'Easy Reporting', description: 'Submit issues in seconds with photos and location details.' },
+        { icon: <FaSearch className="text-[#219E64] w-4.5 h-4.5" />, title: 'Real-time Tracking', description: 'Track your reported issues from submission to resolution.' },
+        { icon: <FaBell className="text-[#219E64] w-4.5 h-4.5" />, title: 'Instant Updates', description: 'Get notified when your issue status changes.' },
+        { icon: <FaChartBar className="text-[#219E64] w-4.5 h-4.5" />, title: 'Analytics Dashboard', description: 'View detailed statistics and reports on city issues.' },
+        { icon: <FaBolt className="text-[#219E64] w-4.5 h-4.5" />, title: 'Priority Boost', description: 'Boost your issue priority for faster resolution.' },
+        { icon: <FaAward className="text-[#219E64] w-4.5 h-4.5" />, title: 'Premium Support', description: 'Get unlimited reports and priority support with premium.' },
     ];
 
     return (
@@ -22,7 +22,7 @@ const Powerful = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5 lg:mt-10">
                         {stats.map((stat, index) => (
                             <div key={index} className="bg-white dark:bg-[#1D232A] shadow-sm border border-gray-200 rounded-2xl py-7 px-6 hover:shadow-lg transition">
-                                <div className="inline-block bg-[#E6F6FD] rounded-lg p-3">
+                                <div className="inline-block bg-[#E9F7EF] rounded-lg p-3">
                                     {stat.icon}
                                 </div>
                                 <div>
