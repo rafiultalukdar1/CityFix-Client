@@ -8,6 +8,11 @@ import About from "../pages/AboutPage/About";
 import HowWorkPage from "../pages/HowWorkPage/HowWorkPage";
 import AllIssuesPage from "../pages/AllIssuesPage/AllIssuesPage";
 import IssuesDetails from "../pages/IssuesDetails/IssuesDetails";
+import DashboardLayouts from "../components/Layouts/DashboardLayouts";
+import Citizen from "../pages/CitizenDashboard/Citizen";
+import ReportIssue from "../pages/CitizenDashboard/ReportIssue";
+import MyIssues from "../pages/CitizenDashboard/MyIssues";
+import MyProfile from "../pages/CitizenDashboard/MyProfile";
 
 export const router = createBrowserRouter([
     {
@@ -44,4 +49,26 @@ export const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: '/dashboard',
+        element: <PrivetRoute><DashboardLayouts></DashboardLayouts></PrivetRoute>,
+        children: [
+            {
+                path: 'citizen',
+                Component: Citizen,
+            },
+            {
+                path: 'report-issue',
+                Component: ReportIssue,
+            },
+            {
+                path: 'my-issues',
+                Component: MyIssues,
+            },
+            {
+                path: 'my-profile',
+                Component: MyProfile,
+            }
+        ]
+    }
 ]);
