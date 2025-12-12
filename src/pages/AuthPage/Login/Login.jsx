@@ -4,12 +4,14 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Login = () => {
 
     const [showPass, setShowPass] = useState(false);
     const { signInUser, signWithGoogle } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const axiosSecure = useAxiosSecure();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -27,15 +29,28 @@ const Login = () => {
 
     // Google Login
     const handleGoogleSignIn = () => {
-        signWithGoogle()
-            .then(() => {
-                navigate(location.state || '/');
-                toast.success('Google login successful!');
-            })
-            .catch(() => {
-                toast.error('Google login failed!');
-            });
-    };
+            signWithGoogle()
+                .then((result) => {
+                    const loggedUser = result.user;
+                    const userInfo = {
+                        name: loggedUser.displayName,
+                        email: loggedUser.email,
+                        role: "citizen",
+                        photo: loggedUser.photoURL,
+                        isPremium: false,
+                        createdAt: new Date()
+                    };
+                    axiosSecure.post("/users", userInfo)
+                        .then(() => {
+                            navigate(location.state || '/');
+                            toast.success('Google login successful!');
+                        })
+                        .catch(() => toast.error("Saving user failed!"));
+                })
+                .catch(() => {
+                    toast.error('Google login failed!');
+                });
+        };
 
     return (
         <div className='py-[65px] lg:py-[95px]'>

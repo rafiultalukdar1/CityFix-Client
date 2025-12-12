@@ -5,14 +5,48 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Register = () => {
 
     const [showPass, setShowPass] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, signWithGoogle, updateUserProfile } = useAuth();
+    const axiosSecure = useAxiosSecure();
     const location = useLocation();
     const navigate = useNavigate();
+
+    
+    // Form Register
+    // const handleRegister = (data) => {
+    //     const profileImg = data.photo[0];
+    //     createUser(data.email, data.password)
+    //         .then(() => {
+    //             const formData = new FormData();
+    //             formData.append('image', profileImg);
+    //             const img_Api_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_KEY}`;
+    //             axios.post(img_Api_URL, formData)
+    //                 .then(res => {
+    //                     const userProfile = {
+    //                         displayName: data.name,
+    //                         photoURL: res.data.data.display_url,
+    //                     };
+    //                     updateUserProfile(userProfile)
+    //                         .then(() => {
+    //                             navigate(location.state || '/');
+    //                             toast.success('Registration successful!');
+    //                         });
+    //                 })
+    //                 .catch(() => {
+    //                     toast.error('Image upload failed!');
+    //                 });
+    //         })
+    //         .catch(() => {
+    //             toast.error('Email already exists or invalid!');
+    //         });
+    // };
+
+    
 
     // Form Register
     const handleRegister = (data) => {
@@ -30,30 +64,61 @@ const Register = () => {
                         };
                         updateUserProfile(userProfile)
                             .then(() => {
-                                navigate(location.state || '/');
-                                toast.success('Registration successful!');
+                                const userInfo = {
+                                    name: data.name,
+                                    email: data.email,
+                                    role: "citizen",
+                                    photo: res.data.data.display_url,
+                                    isPremium: false,
+                                    createdAt: new Date()
+                                };
+                                axiosSecure.post("/users", userInfo)
+                                    .then(() => {
+                                        navigate(location.state || '/');
+                                        toast.success('Registration successful!');
+                                    });
+
                             });
                     })
-                    .catch(() => {
-                        toast.error('Image upload failed!');
-                    });
+                    .catch(() => toast.error('Image upload failed!'));
             })
-            .catch(() => {
-                toast.error('Email already exists or invalid!');
-            });
+            .catch(() => toast.error('Email already exists or invalid!'));
     };
+
+
+
+
+
+
 
     // Google Register
     const handleGoogleSignIn = () => {
         signWithGoogle()
-            .then(() => {
-                navigate(location.state || '/');
-                toast.success('Google login successful!');
+            .then((result) => {
+                const loggedUser = result.user;
+                const userInfo = {
+                    name: loggedUser.displayName,
+                    email: loggedUser.email,
+                    role: "citizen",
+                    photo: loggedUser.photoURL,
+                    isPremium: false,
+                    createdAt: new Date()
+                };
+                axiosSecure.post("/users", userInfo)
+                    .then(() => {
+                        navigate(location.state || '/');
+                        toast.success('Google login successful!');
+                    })
+                    .catch(() => toast.error("Saving user failed!"));
             })
             .catch(() => {
                 toast.error('Google login failed!');
             });
     };
+
+
+
+
 
     return (
         <div className='py-[65px] lg:py-[95px]'>

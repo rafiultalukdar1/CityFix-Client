@@ -35,9 +35,12 @@ const AuthProvider = ({ children }) => {
     };
 
     // update profile
-    const updateUserProfile = (profile) => {
-        return updateProfile(auth.currentUser, profile)
-    }
+    const updateUserProfile = async (profile) => {
+        await updateProfile(auth.currentUser, profile);
+        setUser({ ...auth.currentUser, ...profile });
+    };
+
+
 
 
     useEffect(() => {

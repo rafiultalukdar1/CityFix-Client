@@ -99,7 +99,7 @@ const Nav = () => {
                                     :
                                     <div className='login-nav flex items-center gap-2'>
                                         <NavLink to='/login' className='py-1.5 px-5 bg-white rounded-lg text-[#219E64] border border-[#219E64] text-[18px] font-semibold'>Login</NavLink>
-                                        {/* <NavLink to='/register' className='py-1.5 px-5 bg-white rounded-lg text-[#219E64] border border-[#219E64] text-[18px] font-semibold hidden sm:block'>Register</NavLink> */}
+                                        <NavLink to='/register' className='py-1.5 px-5 bg-white rounded-lg text-[#219E64] border border-[#219E64] text-[18px] font-semibold hidden sm:block'>Register</NavLink>
                                     </div>
                                 }
                             </div>
