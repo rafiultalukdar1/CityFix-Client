@@ -69,7 +69,7 @@ const MyProfile = () => {
     return (
         <>
             <title>CityFix - My Profile</title>
-            <div className='px-3 pt-12'>
+            <div className='px-3 py-12'>
                 <div className='max-w-[700px] mx-auto flex flex-col gap-8'>
                     <div>
                         <h2 className='text-[32px] md:text-[38px] lg:text-[48px] text-[#141414] dark:text-white font-bold'>My Profile</h2>

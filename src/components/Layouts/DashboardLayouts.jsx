@@ -40,7 +40,7 @@ const DashboardLayouts = () => {
             <div className="drawer xl:drawer-open">
                 <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content">
-                    <nav className="navbar w-full bg-[#FBFCFB] dark:bg-gray-900 shadow-sm flex justify-between items-center">
+                    <nav className="navbar w-full bg-[#FBFCFB] dark:bg-gray-900 shadow-sm flex justify-between items-center sticky top-0 z-99">
                         {/* Small screen button */}
                         <label htmlFor="my-drawer-4" className="xl:hidden">
                             <div className='pl-2 md:pl-5 cursor-pointer text-black text-[20px]'><FaBarsStaggered /></div>
