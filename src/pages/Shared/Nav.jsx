@@ -85,7 +85,7 @@ const Nav = () => {
                                                         </div>
 
                                                         <div onClick={() => setOpen(false)} className='border-t border-b border-[#DADADA] py-4 dark:border-[#464646] flex flex-col'>
-                                                            <Link to='/dashboard/citizen' className='flex items-center gap-2 px-[15px] py-2 text-[15px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full'><LuLayoutDashboard /><span>Dashboard</span></Link>
+                                                            <Link to='/dashboard' className='flex items-center gap-2 px-[15px] py-2 text-[15px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full'><LuLayoutDashboard /><span>Dashboard</span></Link>
                                                             <Link to='/dashboard/my-profile' className='flex items-center gap-2 px-[15px] py-2 text-[15px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full'><CgProfile /><span>Profile</span></Link>
                                                         </div>
 

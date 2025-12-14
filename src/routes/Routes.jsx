@@ -13,6 +13,10 @@ import Citizen from "../pages/CitizenDashboard/Citizen";
 import ReportIssue from "../pages/CitizenDashboard/ReportIssue";
 import MyIssues from "../pages/CitizenDashboard/MyIssues";
 import MyProfile from "../pages/CitizenDashboard/MyProfile";
+import Staff from "../pages/StaffDashboard/staff";
+import AssignedIssues from "../pages/StaffDashboard/AssignedIssues";
+import StaffPrivateRoute from "./StaffPrivateRoute";
+import StaffProfile from "../pages/StaffDashboard/StaffProfile";
 
 export const router = createBrowserRouter([
     {
@@ -68,6 +72,18 @@ export const router = createBrowserRouter([
             {
                 path: 'my-profile',
                 Component: MyProfile,
+            },
+            {
+                path: 'staff',
+                element: <StaffPrivateRoute><Staff></Staff></StaffPrivateRoute>,
+            },
+            {
+                path: 'assigned-issues',
+                element: <StaffPrivateRoute><AssignedIssues></AssignedIssues></StaffPrivateRoute>
+            },
+            {
+                path: 'staff-profile',
+                element: <StaffPrivateRoute><StaffProfile></StaffProfile></StaffPrivateRoute>
             }
         ]
     }

@@ -5,11 +5,10 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { FaRegChessQueen } from 'react-icons/fa6';
 import { IoIosCalendar } from 'react-icons/io';
 import { FaRegUserCircle } from 'react-icons/fa';
 
-const MyProfile = () => {
+const StaffProfile = () => {
     
     const axiosSecure = useAxiosSecure();
     const { updateUserProfile, user } = useAuth();
@@ -77,7 +76,7 @@ const MyProfile = () => {
                         <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[15px]'>Manage your account settings and subscription.</p>
                     </div>
 
-                    <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>
+                    {/* <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>
                         <div className='flex items-center gap-3.5'>
                             <div className='bg-[#E7F8F2] text-[#10B77F] p-2 md:p-4 rounded-md text-[22px] md:text-[28px]'>
                                 <FaRegChessQueen />
@@ -88,7 +87,7 @@ const MyProfile = () => {
                             </div>
                         </div>
                         <button className='px-3.5 py-1.5 rounded-md font-medium bg-[#219E64] hover:bg-[#0c7e49] transition text-white'>Upgrade</button>
-                    </div>
+                    </div> */}
 
                     <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex flex-col gap-2.5'>
                         <div className='flex items-center gap-5'>
@@ -127,4 +126,4 @@ const MyProfile = () => {
     );
 };
 
-export default MyProfile;
+export default StaffProfile;
