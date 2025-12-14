@@ -74,7 +74,7 @@ const MyProfile = () => {
                 <div className='max-w-[700px] mx-auto flex flex-col gap-8'>
                     <div>
                         <h2 className='text-[32px] md:text-[38px] lg:text-[48px] text-[#141414] dark:text-white font-bold'>My Profile</h2>
-                        <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[15px]'>Manage your account settings and subscription.</p>
+                        <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Manage your account settings and subscription.</p>
                     </div>
 
                     <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>

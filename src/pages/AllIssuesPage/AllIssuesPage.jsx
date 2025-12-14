@@ -46,6 +46,7 @@ const AllIssuesPage = () => {
         await axiosSecure.patch(`/issues/upvote/${id}`, { userEmail: user.email });
         refetch();
     };
+    
     const handlePrev = () => {
         if (page > 1) setPage(prev => prev - 1);
     };
@@ -136,7 +137,7 @@ const AllIssuesPage = () => {
                                     </div>
                                     <div className='pt-3 px-4 pb-4'>
                                         <div className='flex flex-col gap-1 border-b border-[#219e64e1] pb-3.5 mb-3.5'>
-                                            <p className='flex items-center gap-1.5 text-[16px] font-medium'><IoMdPricetags className='text-[16px] text-[#10B77F]' /><span>{issue.category}</span></p>
+                                            <p className='flex items-center gap-1.5 text-[16px] font-medium'><IoMdPricetags className='text-[16px] text-[#10B77F] capitalize' /><span>{issue.category}</span></p>
                                             <p className='flex items-center gap-1.5 text-[16px] font-medium'><FaLocationDot className='text-[16px] text-[#10B77F]' /><span>{issue.location}</span></p>
                                         </div>
                                         <div className='flex justify-between items-center'>

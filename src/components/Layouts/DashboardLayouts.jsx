@@ -47,9 +47,6 @@ const DashboardLayouts = () => {
         }
     });
 
-
-
-
     return (
         <>
             <div className="drawer xl:drawer-open">
@@ -89,19 +86,6 @@ const DashboardLayouts = () => {
                                     <p className='py-0.5 px-2.5 rounded-full text-[12px] font-medium capitalize bg-[#219E64] text-white inline-block'>{profile.role}</p>
                                 </div>
                             </div>
-
-                            {/* <div className='dashboard-active mt-8 flex flex-col gap-1.5 px-4'>
-                                <NavLink to='/dashboard/citizen'><LuLayoutDashboard /><span>Dashboard</span></NavLink>
-                                <NavLink to='/dashboard/report-issue'><FaPlusCircle /><span>Report Issue</span></NavLink>
-                                <NavLink to='/dashboard/my-issues'><FaFileLines /><span>My Issues</span></NavLink>
-                                <NavLink to='/dashboard/my-profile'><CgProfile /><span>My Profile</span></NavLink>
-                            </div>
-
-                            <div className='staff-dashboard mt-8 flex flex-col gap-1.5 px-4'>
-                                <NavLink to='/dashboard/staff'><LuLayoutDashboard /><span>Dashboard</span></NavLink>
-                                <NavLink to='/dashboard/assigned-issues'><FaFileLines /><span>Assigned Issues</span></NavLink>
-                                <NavLink to='/dashboard/my-profile'><CgProfile /><span>My Profile</span></NavLink>
-                            </div> */}
 
                             {/* Citizen Dashboard Menu */}
                             {profile?.role === 'citizen' && (

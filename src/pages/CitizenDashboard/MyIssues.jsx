@@ -4,7 +4,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { PuffLoader } from 'react-spinners';
 import { IoMdPricetags } from 'react-icons/io';
 import { FaEye, FaLocationDot } from 'react-icons/fa6';
-import { RiDeleteBinLine } from 'react-icons/ri';
+import { RiDeleteBinLine, RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 import { Link } from 'react-router';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 
 const MyIssues = () => {
+    
     const axiosSecure = useAxiosSecure();
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [selectedIssueId, setSelectedIssueId] = React.useState(null);
@@ -115,7 +116,7 @@ const MyIssues = () => {
     return (
         <>
             <title>CityFix - My Issues</title>
-            <div className="px-3 py-12 max-w-[890px] mx-auto">
+            <div className="px-3 py-12 max-w-[1020px] mx-auto">
                 <h2 className="text-[30px] md:text-[34px] lg:text-[40px] font-bold">My Issues ({issues.length})</h2>
                 <p className="text-[#6D7873] text-[16px]">Manage and track all your reported issues.</p>
 
@@ -164,9 +165,12 @@ const MyIssues = () => {
                                 <div className='pt-2 dark:border-white flex justify-between items-center'>
                                     <div className='hidden sm:block'></div>
                                     <div className='flex flex-wrap items-center gap-2.5'>
-                                        <Link to={`/issue-details/${issue._id}`} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4.5 py-2 rounded-md bg-[#219E64] hover:bg-[#0c7e49] transition text-[15px] text-white font-semibold'><FaEye /><span>View Details</span></Link>
 
-                                        <button onClick={() => openModal(issue)} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4.5 py-2 rounded-md border border-gray-300 text-[#141414] font-semibold bg-gray-100 hover:bg-gray-300 transition text-[15px]'><FaRegEdit size={16} /><span>Update</span></button>
+                                        <button className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-md bg-[#F43098] hover:bg-[#c70e71] transition text-[15px] text-white font-semibold'><RiMoneyDollarCircleLine /><span>Boost Now</span></button>
+
+                                        <Link to={`/issue-details/${issue._id}`} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-md bg-[#219E64] hover:bg-[#0c7e49] transition text-[15px] text-white font-semibold'><FaEye /><span>View Details</span></Link>
+
+                                        <button onClick={() => openModal(issue)} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-md border border-gray-300 text-[#141414] font-semibold bg-gray-100 hover:bg-gray-300 transition text-[15px]'><FaRegEdit size={16} /><span>Update</span></button>
 
                                         <button onClick={() => handleDelete(issue._id)} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4.5 py-2 rounded-md bg-red-600 hover:bg-red-500 text-[15px] text-white font-semibold transition'><RiDeleteBinLine size={16} /><span>Delete</span></button>
                                     </div>

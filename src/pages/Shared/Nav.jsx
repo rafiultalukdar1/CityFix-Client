@@ -5,12 +5,15 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
 import useAuth from '../../hooks/useAuth';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const Nav = () => {
 
     const { user, logOut } = useAuth();
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const [open, setOpen] = useState(false);
+    const axiosSecure = useAxiosSecure();
 
     const links = (
         <>
@@ -42,7 +45,17 @@ const Nav = () => {
         setTheme(checked ? "dark" : "light");
     };
 
-    console.log(user)
+    // for dynamic rout
+    const { data: newUsers } = useQuery({
+        queryKey: ['newUsers'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/users');
+            return res.data;
+        }
+    });
+
+    const dashboardRoute = newUsers?.role === 'citizen' ? '/dashboard/citizen' : newUsers?.role === 'staff' ? '/dashboard/staff' : newUsers?.role === 'admin' ? '/dashboard/admin' : '/dashboard';
+    const profileRoute = newUsers?.role === 'citizen' ? '/dashboard/my-profile' : newUsers?.role === 'staff' ? '/dashboard/staff-profile' : newUsers?.role === 'admin' ? '/dashboard/admin-profile' : '/dashboard';
 
 
     return (
@@ -83,12 +96,10 @@ const Nav = () => {
                                                             <h3 className='text-[#141414] dark:text-white text-[20px] font-semibold'>{user.displayName}</h3>
                                                             <p className='text-sm '>{user.email}</p>
                                                         </div>
-
                                                         <div onClick={() => setOpen(false)} className='border-t border-b border-[#DADADA] py-4 dark:border-[#464646] flex flex-col'>
-                                                            <Link to='/dashboard' className='flex items-center gap-2 px-[15px] py-2 text-[15px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full'><LuLayoutDashboard /><span>Dashboard</span></Link>
-                                                            <Link to='/dashboard/my-profile' className='flex items-center gap-2 px-[15px] py-2 text-[15px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full'><CgProfile /><span>Profile</span></Link>
+                                                            <Link to={dashboardRoute} className='flex items-center gap-2 px-[15px] py-2 text-[15px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full'><LuLayoutDashboard /><span>Dashboard</span></Link>
+                                                            <Link to={profileRoute} className='flex items-center gap-2 px-[15px] py-2 text-[15px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full'><CgProfile /><span>Profile</span></Link>
                                                         </div>
-
                                                         <div onClick={() => setOpen(false)} className='dropdown-link'>
                                                             <button onClick={() => handleLogOut()} className='flex items-center gap-2 px-[15px] py-1.5 text-[16px] font-medium text-red-500 hover:bg-[#219E64] hover:text-white transition rounded w-full'><AiOutlineLogout /><span>LogOut</span></button>
                                                         </div>
