@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { FaPlusCircle } from 'react-icons/fa';
 import { FaBarsStaggered, FaFileLines, FaMountainCity } from 'react-icons/fa6';
-import { LuLayoutDashboard } from 'react-icons/lu';
+import { LuLayoutDashboard, LuUsers } from 'react-icons/lu';
 import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import { AiOutlineLogout } from 'react-icons/ai';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import { RiUserSettingsLine } from 'react-icons/ri';
+import { MdOutlinePayments } from 'react-icons/md';
 
 const DashboardLayouts = () => {
 
@@ -88,7 +90,6 @@ const DashboardLayouts = () => {
                                 </div>
                             </div>
 
-
                             {/* <div className='dashboard-active mt-8 flex flex-col gap-1.5 px-4'>
                                 <NavLink to='/dashboard/citizen'><LuLayoutDashboard /><span>Dashboard</span></NavLink>
                                 <NavLink to='/dashboard/report-issue'><FaPlusCircle /><span>Report Issue</span></NavLink>
@@ -101,8 +102,6 @@ const DashboardLayouts = () => {
                                 <NavLink to='/dashboard/assigned-issues'><FaFileLines /><span>Assigned Issues</span></NavLink>
                                 <NavLink to='/dashboard/my-profile'><CgProfile /><span>My Profile</span></NavLink>
                             </div> */}
-
-
 
                             {/* Citizen Dashboard Menu */}
                             {profile?.role === 'citizen' && (
@@ -123,17 +122,18 @@ const DashboardLayouts = () => {
                                 </div>
                             )}
 
-
-
-
-
-
-
-
-
-
-
-
+                            {/* Admin Dashboard Menu */}
+                            {profile?.role === 'admin' && (
+                                <div className='admin-dashboard mt-8 flex flex-col gap-1.5 px-4'>
+                                    <NavLink to='/dashboard/admin'><LuLayoutDashboard /><span>Dashboard</span></NavLink>
+                                    <NavLink to='/dashboard/all-issues'><FaFileLines /><span>My Issues</span></NavLink>
+                                    <NavLink to='/dashboard/manage-users'><LuUsers /><span>Manage Users</span></NavLink>
+                                    <NavLink to='/dashboard/manage-staff'><RiUserSettingsLine /><span>Manage Staff</span></NavLink>
+                                    <NavLink to='/dashboard/payments'><MdOutlinePayments /><span>Payments</span></NavLink>
+                                    <NavLink to='/dashboard/admin-profile'><CgProfile /><span>My Profile</span></NavLink>
+                                </div>
+                            )}
+                            
                         </div>
                         <div className='dashboard-active mb-12 flex flex-col gap-1.5 px-4 border-t border-[#219E64] pt-5'>
                             <Link to='/'><FaMountainCity /><span>Back to Home</span></Link>

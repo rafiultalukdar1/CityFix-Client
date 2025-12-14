@@ -54,11 +54,13 @@ button {
   height: 1px;
 }
 
+.admin-dashboard a,
 .staff-dashboard a,
 .dashboard-active a {
   @apply flex items-center gap-2 px-[15px] py-2 text-[16px] font-medium text-[#141414] dark:text-white hover:bg-[#219E64] hover:text-white transition rounded w-full;
 }
 
+.admin-dashboard a.active,
 .staff-dashboard a.active,
 .dashboard-active a.active {
   @apply text-white bg-[#219E64];

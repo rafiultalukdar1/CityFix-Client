@@ -17,6 +17,14 @@ import Staff from "../pages/StaffDashboard/staff";
 import AssignedIssues from "../pages/StaffDashboard/AssignedIssues";
 import StaffPrivateRoute from "./StaffPrivateRoute";
 import StaffProfile from "../pages/StaffDashboard/StaffProfile";
+import AdminPrivateRoute from "./AdminPrivateRoute";
+import Admin from "../pages/AdminDashboard/Admin";
+import AllIssues from "../pages/AdminDashboard/AllIssues";
+import ManageUsers from "../pages/AdminDashboard/ManageUsers";
+import ManageStaff from "../pages/AdminDashboard/ManageStaff";
+import Payments from "../pages/AdminDashboard/Payments";
+import AdminProfile from "../pages/AdminDashboard/AdminProfile";
+import CitizenPrivateRoute from "./CitizenPrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -59,23 +67,23 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: 'citizen',
-                Component: Citizen,
+                element: <CitizenPrivateRoute><Citizen></Citizen></CitizenPrivateRoute>
             },
             {
                 path: 'report-issue',
-                Component: ReportIssue,
+                element: <CitizenPrivateRoute><ReportIssue></ReportIssue></CitizenPrivateRoute>
             },
             {
                 path: 'my-issues',
-                Component: MyIssues,
+                element: <CitizenPrivateRoute><MyIssues></MyIssues></CitizenPrivateRoute>
             },
             {
                 path: 'my-profile',
-                Component: MyProfile,
+                element: <CitizenPrivateRoute><MyProfile></MyProfile></CitizenPrivateRoute>
             },
             {
                 path: 'staff',
-                element: <StaffPrivateRoute><Staff></Staff></StaffPrivateRoute>,
+                element: <StaffPrivateRoute><Staff></Staff></StaffPrivateRoute>
             },
             {
                 path: 'assigned-issues',
@@ -84,6 +92,30 @@ export const router = createBrowserRouter([
             {
                 path: 'staff-profile',
                 element: <StaffPrivateRoute><StaffProfile></StaffProfile></StaffPrivateRoute>
+            },
+            {
+                path: 'admin',
+                element: <AdminPrivateRoute><Admin></Admin></AdminPrivateRoute>
+            },
+            {
+                path: 'all-issues',
+                element: <AdminPrivateRoute><AllIssues></AllIssues></AdminPrivateRoute>
+            },
+            {
+                path: 'manage-users',
+                element: <AdminPrivateRoute><ManageUsers></ManageUsers></AdminPrivateRoute>
+            },
+            {
+                path: 'manage-staff',
+                element: <AdminPrivateRoute><ManageStaff></ManageStaff></AdminPrivateRoute>
+            },
+            {
+                path: 'payments',
+                element: <AdminPrivateRoute><Payments></Payments></AdminPrivateRoute>
+            },
+            {
+                path: 'admin-profile',
+                element: <AdminPrivateRoute><AdminProfile></AdminProfile></AdminPrivateRoute>
             }
         ]
     }
