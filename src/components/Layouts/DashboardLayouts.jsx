@@ -110,7 +110,7 @@ const DashboardLayouts = () => {
                             {profile?.role === 'admin' && (
                                 <div className='admin-dashboard mt-8 flex flex-col gap-1.5 px-4'>
                                     <NavLink to='/dashboard/admin'><LuLayoutDashboard /><span>Dashboard</span></NavLink>
-                                    <NavLink to='/dashboard/all-issues'><FaFileLines /><span>My Issues</span></NavLink>
+                                    <NavLink to='/dashboard/all-issues'><FaFileLines /><span>All Issues</span></NavLink>
                                     <NavLink to='/dashboard/manage-users'><LuUsers /><span>Manage Users</span></NavLink>
                                     <NavLink to='/dashboard/manage-staff'><RiUserSettingsLine /><span>Manage Staff</span></NavLink>
                                     <NavLink to='/dashboard/payments'><MdOutlinePayments /><span>Payments</span></NavLink>

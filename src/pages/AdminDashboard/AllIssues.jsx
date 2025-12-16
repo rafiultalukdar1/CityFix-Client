@@ -74,7 +74,7 @@ const AllIssues = () => {
                 <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Manage and assign reported issues to staff.</p>
 
                 <div className="border border-[#219e64] rounded-xl overflow-x-scroll mt-5 md:mt-8">
-                    <table className="w-full min-w-[1450px] text-sm">
+                    <table className="w-full min-w-[1400px] text-sm">
                         <thead className="bg-gray-50 dark:bg-[#101828]">
                             <tr className="text-left">
                                 <th className="p-4">Issue</th>

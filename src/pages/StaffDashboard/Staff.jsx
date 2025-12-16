@@ -48,6 +48,30 @@ const Staff = () => {
         { name: 'Resolved', value: resolvedCount }
     ];
 
+    const staffStats = [
+        {
+            label: 'Assigned Issues',
+            value: issues.length,
+            icon: FaFileLines
+        },
+        {
+            label: 'In Progress',
+            value: progressCount,
+            icon: GiProgression
+        },
+        {
+            label: 'Resolved',
+            value: resolvedCount,
+            icon: FaCheckCircle
+        },
+        {
+            label: "Today's Tasks",
+            value: todaysTasksCount,
+            icon: IoCalendarClear
+        }
+    ];
+
+
 
 
 
@@ -60,7 +84,7 @@ const Staff = () => {
                 <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Overview of your assigned tasks and progress.</p>
 
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 items-start mt-7 lg:mt-12 '>
-                    <div className="bg-[#FBFCFB] dark:bg-gray-900 p-5 rounded-lg shadow-sm">
+                    <div className="bg-[#FBFCFB] dark:bg-gray-900 p-5 rounded-lg shadow-sm hover:shadow-md transition">
                         <h3 className="text-[22px] font-bold mb-4">Issue Status Overview</h3>
                         <div className="w-full h-[250px]">
                             <ResponsiveContainer>
@@ -76,43 +100,19 @@ const Staff = () => {
                             </ResponsiveContainer>
                         </div>
                     </div>
+
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                        <div className='flex justify-between items-center bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-4 px-5 rounded-md lg:rounded-lg'>
-                            <div>
-                                <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Assigned Issues</p>
-                                <h3 className='text-[24px] md:text-[26px] lg:text-[30px] font-bold'>{issues.length}</h3>
+                        {staffStats.map((item, index) => (
+                            <div key={index} className='flex justify-between items-center bg-[#FBFCFB] dark:bg-gray-900 shadow-sm hover:shadow-md py-4 px-5 rounded-md lg:rounded-lg transition'>
+                                <div>
+                                    <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>{item.label}</p>
+                                    <h3 className='text-[24px] md:text-[26px] lg:text-[30px] font-bold'>{item.value}</h3>
+                                </div>
+                                <div className='bg-[#E7F8F2] text-[#10B77F] p-3 rounded-md text-[20px] md:text-[22px]'>
+                                    <item.icon />
+                                </div>
                             </div>
-                            <div className='bg-[#E7F8F2] text-[#10B77F] p-3 rounded-md text-[20px] md:text-[22px]'>
-                                <FaFileLines />
-                            </div>
-                        </div>
-                        <div className='flex justify-between items-center bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-4 px-5 rounded-md lg:rounded-lg'>
-                            <div>
-                                <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>In Progress</p>
-                                <h3 className='text-[24px] md:text-[26px] lg:text-[30px] font-bold'>{progressCount}</h3>
-                            </div>
-                            <div className='bg-[#E7F8F2] text-[#10B77F] p-3 rounded-md text-[20px] md:text-[22px]'>
-                                <GiProgression />
-                            </div>
-                        </div>
-                        <div className='flex justify-between items-center bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-4 px-5 rounded-md lg:rounded-lg'>
-                            <div>
-                                <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Resolved</p>
-                                <h3 className='text-[24px] md:text-[26px] lg:text-[30px] font-bold'>{resolvedCount}</h3>
-                            </div>
-                            <div className='bg-[#E7F8F2] text-[#10B77F] p-3 rounded-md text-[20px] md:text-[22px]'>
-                                <FaCheckCircle />
-                            </div>
-                        </div>
-                        <div className='flex justify-between items-center bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-4 px-5 rounded-md lg:rounded-lg'>
-                            <div>
-                                <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Today's Tasks</p>
-                                <h3 className='text-[24px] md:text-[26px] lg:text-[30px] font-bold'>{todaysTasksCount}</h3>
-                            </div>
-                            <div className='bg-[#E7F8F2] text-[#10B77F] p-3 rounded-md text-[20px] md:text-[22px]'>
-                                <IoCalendarClear />
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
 
