@@ -13,7 +13,7 @@ import Citizen from "../pages/CitizenDashboard/Citizen";
 import ReportIssue from "../pages/CitizenDashboard/ReportIssue";
 import MyIssues from "../pages/CitizenDashboard/MyIssues";
 import MyProfile from "../pages/CitizenDashboard/MyProfile";
-import Staff from "../pages/StaffDashboard/staff";
+import Staff from "../pages/StaffDashboard/Staff";
 import AssignedIssues from "../pages/StaffDashboard/AssignedIssues";
 import StaffPrivateRoute from "./StaffPrivateRoute";
 import StaffProfile from "../pages/StaffDashboard/StaffProfile";
