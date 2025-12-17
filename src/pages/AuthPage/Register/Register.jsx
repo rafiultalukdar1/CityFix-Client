@@ -70,6 +70,8 @@ const Register = () => {
                                     role: "citizen",
                                     photo: res.data.data.display_url,
                                     isPremium: false,
+                                    status: "active",
+                                    isBlocked: false,
                                     createdAt: new Date()
                                 };
                                 axiosSecure.post("/users", userInfo)
@@ -102,6 +104,8 @@ const Register = () => {
                     role: "citizen",
                     photo: loggedUser.photoURL,
                     isPremium: false,
+                    status: "active",
+                    isBlocked: false,
                     createdAt: new Date()
                 };
                 axiosSecure.post("/users", userInfo)

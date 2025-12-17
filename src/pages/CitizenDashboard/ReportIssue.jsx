@@ -18,7 +18,7 @@ const ReportIssue = () => {
   const { data: userInfo, isLoading: userLoading } = useQuery({
     queryKey: ['user', user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/${user?.email}`);
+      const res = await axiosSecure.get('/users');
       return res.data;
     },
     enabled: !!user
@@ -118,10 +118,10 @@ const ReportIssue = () => {
                 {isBlocked && <p className="text-red-500 text-center font-semibold my-4">Your account is blocked. Contact authorities for support.</p>}
 
                 {(!isPremium && userIssuesCount >= 3) && (
-                <div className="text-center my-4">
-                    <p className="text-red-500 font-semibold mb-2">Free users can submit only 3 issues.</p>
-                    <button className="bg-orange-600 hover:bg-orange-500 font-semibold text-white py-2 px-4 rounded" onClick={() => navigate('/dashboard/my-profile')}>Subscribe Now</button>
-                </div>
+                  <div className="text-center my-4">
+                      <p className="text-red-500 font-semibold mb-2">Free users can submit only 3 issues.</p>
+                      <button className="bg-orange-600 hover:bg-orange-500 font-semibold text-white py-2 px-4 rounded" onClick={() => navigate('/dashboard/my-profile')}>Subscribe Now</button>
+                  </div>
                 )}
 
                 {showSubscribe && (

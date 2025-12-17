@@ -15,7 +15,7 @@ const Banner = () => {
 
     return (
         <>
-            <div className='py-[55px] md:py-[70px] lg:py-[105px]'>
+            <div className='py-[55px] md:py-[70px] lg:py-[120px] xl:py-[150px]'>
                 <div className='container'>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 items-center'>
                         <div className='order-2 lg:order-1'>

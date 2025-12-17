@@ -38,6 +38,8 @@ const Login = () => {
                         role: "citizen",
                         photo: loggedUser.photoURL,
                         isPremium: false,
+                        status: "active",
+                        isBlocked: false,
                         createdAt: new Date()
                     };
                     axiosSecure.post("/users", userInfo)
