@@ -72,13 +72,24 @@ const MyIssues = () => {
         }
     };
 
-    if (isLoading) {
+    // block
+    const { data: dbUser, isLoading: userLoading } = useQuery({
+        queryKey: ['db-user'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/users')
+            return res.data
+        }
+    });
+
+    const isBlocked = dbUser?.isBlocked;
+
+    if (isLoading || userLoading) {
         return (
             <div className="flex justify-center items-center h-[60vh]">
                 <PuffLoader color="#219E64" size={60} />
             </div>
-        );
-    };
+        )
+    }
 
     const handleFilterChange = (setter) => (e) => {
         setter(e.target.value);
@@ -93,22 +104,27 @@ const MyIssues = () => {
 
     // Delete
     const handleDelete = async (id) => {
+        if (isBlocked) {
+            toast.error('Your account is blocked. You cannot delete issues.')
+            return
+        }
         const result = await Swal.fire({
             title: 'Are you sure?',
             text: 'This issue will be permanently deleted',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Delete'
-        });
-
+        })
         if (result.isConfirmed) {
-            const res = await axiosSecure.delete(`/issues/${id}`);
+            const res = await axiosSecure.delete(`/issues/${id}`)
             if (res.data.deletedCount > 0) {
-                toast.success('Issue deleted');
-                refetch();
+                toast.success('Issue deleted')
+                refetch()
             }
         }
     };
+
+
 
 
 
@@ -166,13 +182,54 @@ const MyIssues = () => {
                                     <div className='hidden sm:block'></div>
                                     <div className='flex flex-wrap items-center gap-2.5'>
 
-                                        <button className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-md bg-[#F43098] hover:bg-[#c70e71] transition text-[15px] text-white font-semibold'><RiMoneyDollarCircleLine /><span>Boost Now</span></button>
+                                        <button
+                                            onClick={() => {
+                                                if (isBlocked) {
+                                                    toast.error('Your account is blocked. You cannot boost issues.')
+                                                    return
+                                                }
+                                            }}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-md text-white font-semibold transition
+                                                ${isBlocked ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#F43098] hover:bg-[#c70e71]'}
+                                            `}>
+                                            <RiMoneyDollarCircleLine />
+                                            <span>Boost Now</span>
+                                        </button>
+
 
                                         <Link to={`/issue-details/${issue._id}`} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-md bg-[#219E64] hover:bg-[#0c7e49] transition text-[15px] text-white font-semibold'><FaEye /><span>View Details</span></Link>
 
-                                        <button onClick={() => openModal(issue)} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-md border border-gray-300 text-[#141414] font-semibold bg-gray-100 hover:bg-gray-300 transition text-[15px]'><FaRegEdit size={16} /><span>Update</span></button>
+                                        <button
+                                            onClick={() => {
+                                                if (isBlocked) {
+                                                    toast.error('Your account is blocked. You cannot update issues.');
+                                                    return;
+                                                }
+                                                openModal(issue);
+                                            }}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-md border border-gray-300 font-semibold transition
+                                                ${isBlocked ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-gray-100 hover:bg-gray-300 text-[#141414]'}
+                                            `}>
+                                            <FaRegEdit size={16} />
+                                            <span>Update</span>
+                                        </button>
 
-                                        <button onClick={() => handleDelete(issue._id)} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4.5 py-2 rounded-md bg-red-600 hover:bg-red-500 text-[15px] text-white font-semibold transition'><RiDeleteBinLine size={16} /><span>Delete</span></button>
+
+                                        <button
+                                            onClick={() => {
+                                                if (isBlocked) {
+                                                    toast.error('Your account is blocked. You cannot delete issues.');
+                                                    return;
+                                                }
+                                                handleDelete(issue._id);
+                                            }}
+                                            className={`flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4.5 py-2 rounded-md text-[15px] font-semibold transition
+                                                ${isBlocked ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-red-600 hover:bg-red-500 text-white'}
+                                            `}>
+                                            <RiDeleteBinLine size={16} />
+                                            <span>Delete</span>
+                                        </button>
+
                                     </div>
                                 </div>
                             </div>

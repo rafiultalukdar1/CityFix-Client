@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const Login = () => {
 
@@ -15,12 +16,33 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
+    // Navigate for user
+    const { data: dbUser, isLoading } = useQuery({
+        queryKey: ['db-user'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/users/loggedin');
+            return res.data;
+        }
+    });
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-[60vh]">
+                <PuffLoader color="#219E64" size={60} />
+            </div>
+        )
+    };
+
     // Form Login
     const handleLogin = (data) => {
         signInUser(data.email, data.password)
             .then(() => {
-                navigate(location.state || '/');
+                // navigate(location.state || '/');
                 toast.success('Login successful!');
+                if (dbUser.role === 'admin') navigate('/dashboard/admin');
+                else if (dbUser.role === 'staff') navigate('/dashboard/staff');
+                else navigate(location.state || '/');
+
             })
             .catch(() => {
                 toast.error('Invalid email or password!');

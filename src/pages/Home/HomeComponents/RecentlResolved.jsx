@@ -6,6 +6,7 @@ import { FaArrowRight, FaEye, FaLocationDot } from 'react-icons/fa6';
 import { BiLike } from 'react-icons/bi';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 const RecentlResolved = () => {
 
@@ -20,6 +21,16 @@ const RecentlResolved = () => {
             return res.data;
         }
     });
+
+    // block
+    const { data: dbUser } = useQuery({
+        queryKey: ['db-user'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/users')
+            return res.data
+        }
+    });
+    const isBlocked = dbUser?.isBlocked;
 
     // upvoted 
     const handleUpvote = async (id) => {
@@ -64,7 +75,32 @@ const RecentlResolved = () => {
                                     </div>
                                     <div className='flex justify-between items-center'>
                                         {/* <button onClick={() => handleUpvote(issue._id)} className='flex items-center gap-1.5 px-3.5 py-1 rounded-md border border-gray-300 text-[#141414] bg-gray-100 font-medium'><BiLike /><span>{issue.upvotes}</span></button> */}
-                                        <button onClick={() => handleUpvote(issue._id)} className={`flex items-center gap-1.5 px-3.5 py-1 rounded-md border ${issue.upvotedUsers?.includes(user?.email) ? 'bg-[#219E64] text-white border-[#219E64]' : 'bg-gray-100 text-[#141414] border-gray-300'} font-medium transition`}><BiLike className={`${issue.upvotedUsers?.includes(user?.email) ? 'text-white' : 'text-[#141414]'}`} /><span>{issue.upvotes}</span></button>
+                                        {/* <button onClick={() => handleUpvote(issue._id)} className={`flex items-center gap-1.5 px-3.5 py-1 rounded-md border ${issue.upvotedUsers?.includes(user?.email) ? 'bg-[#219E64] text-white border-[#219E64]' : 'bg-gray-100 text-[#141414] border-gray-300'} font-medium transition`}><BiLike className={`${issue.upvotedUsers?.includes(user?.email) ? 'text-white' : 'text-[#141414]'}`} /><span>{issue.upvotes}</span></button> */}
+                                        <button
+                                            onClick={() => {
+                                                if (isBlocked) {
+                                                    toast.error('Your account is blocked. You cannot upvote.')
+                                                    return
+                                                }
+                                                handleUpvote(issue._id)
+                                            }}
+                                            className={`inline-flex self-start items-center gap-1.5 px-3.5 py-1 rounded-md border font-medium transition
+                                            ${isBlocked
+                                                ? 'bg-gray-200 text-gray-400 border-gray-300 cursor-not-allowed'
+                                                : issue.upvotedUsers?.includes(user?.email)
+                                                    ? 'bg-[#219E64] text-white border-[#219E64]'
+                                                    : 'bg-gray-100 text-[#141414] border-gray-300 hover:bg-gray-200'
+                                            }`}>
+                                            <BiLike
+                                                className={`${isBlocked
+                                                    ? 'text-gray-400'
+                                                    : issue.upvotedUsers?.includes(user?.email)
+                                                        ? 'text-white'
+                                                        : 'text-[#141414]'
+                                                }`}
+                                            />
+                                            <span>{issue.upvotes}</span>
+                                        </button>
 
                                         <Link to={`/issue-details/${issue._id}`} className='flex items-center gap-1.5 px-3.5 py-1.5 rounded-md font-medium bg-[#219E64] hover:bg-[#0c7e49] transition text-white'><FaEye /><span>View Details</span></Link>
                                     </div>

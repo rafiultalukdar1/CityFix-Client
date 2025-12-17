@@ -115,7 +115,7 @@ const ReportIssue = () => {
                 Report a public issue with details so it can be reviewed and resolved promptly.
                 </p>
 
-                {isBlocked && <p className="text-red-500 text-center font-semibold my-4">Your account is blocked. Contact authorities for support.</p>}
+                {isBlocked && <p className="text-red-500 text-center font-semibold my-5 text-[20px]">Your account is blocked. Contact authorities for support.</p>}
 
                 {(!isPremium && userIssuesCount >= 3) && (
                   <div className="text-center my-4">
