@@ -10,12 +10,12 @@ const StaffPrivateRoute = ({ children }) => {
     const axiosSecure = useAxiosSecure();
 
     const { data: profile = {}, isLoading } = useQuery({
-        queryKey: ['profile'],
+        queryKey: ['profile', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
             return res.data;
         },
-        enabled: !!user
+        enabled: !!user?.email
     });
 
     if (loading || isLoading) {

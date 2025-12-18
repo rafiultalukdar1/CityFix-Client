@@ -7,24 +7,29 @@ import { Link, NavLink, Outlet } from 'react-router';
 import useAuth from '../../hooks/useAuth';
 import { AiOutlineLogout } from 'react-icons/ai';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { MdOutlinePayments } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 const DashboardLayouts = () => {
 
     const { logOut, user } = useAuth();
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const axiosSecure = useAxiosSecure();
+    const queryClient = useQueryClient();
 
-    // Log Out
+    // logout
     const handleLogOut = () => {
+        window.location.replace('/');
         logOut()
             .then(() => {
-                
+                queryClient.clear();
+                toast.success('Logout successful!');
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
+                toast.error('Logout failed!');
             });
     };
 
@@ -39,13 +44,19 @@ const DashboardLayouts = () => {
         setTheme(checked ? "dark" : "light");
     };
 
-    const { data: profile = {} } = useQuery({
-        queryKey: ['profile'],
+    const { data: profile = {}, isLoading } = useQuery({
+        queryKey: ['profile', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
             return res.data;
-        }
+        },
+        enabled: !!user?.email
     });
+
+    if (user && isLoading) {
+        return null;
+    }
+
 
     return (
         <>

@@ -6,7 +6,8 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 const Nav = () => {
 
@@ -14,6 +15,7 @@ const Nav = () => {
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
     const [open, setOpen] = useState(false);
     const axiosSecure = useAxiosSecure();
+    const queryClient = useQueryClient();
 
     const links = (
         <>
@@ -26,14 +28,18 @@ const Nav = () => {
 
     // Log Out
     const handleLogOut = () => {
+        window.location.replace('/');
         logOut()
             .then(() => {
-                
+                queryClient.clear();
+                toast.success('Logout successful!');
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
+                toast.error('Logout failed!');
             });
     };
+
 
     // Dark mood
     useEffect(() => {
@@ -46,13 +52,19 @@ const Nav = () => {
     };
 
     // for dynamic rout
-    const { data: newUsers } = useQuery({
-        queryKey: ['newUsers'],
+    const { data: newUsers = {}, isLoading } = useQuery({
+        queryKey: ['profile', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
             return res.data;
-        }
+        },
+        enabled: !!user?.email
     });
+
+    if (user && isLoading) {
+        return null;
+    }
+    
 
     const dashboardRoute = newUsers?.role === 'citizen' ? '/dashboard/citizen' : newUsers?.role === 'staff' ? '/dashboard/staff' : newUsers?.role === 'admin' ? '/dashboard/admin' : '/dashboard';
     const profileRoute = newUsers?.role === 'citizen' ? '/dashboard/my-profile' : newUsers?.role === 'staff' ? '/dashboard/staff-profile' : newUsers?.role === 'admin' ? '/dashboard/admin-profile' : '/dashboard';
