@@ -8,6 +8,7 @@ import Difference from './HomeComponents/Difference';
 const Home = () => {
     return (
         <>
+            <title>CityFix - Home</title>
             <Banner></Banner>
             <RecentlResolved></RecentlResolved>
             <Powerful></Powerful>

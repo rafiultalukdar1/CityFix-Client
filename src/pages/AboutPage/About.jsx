@@ -5,6 +5,7 @@ import AboutValues from './AboutComponents/AboutValues';
 const About = () => {
     return (
         <>
+            <title>CityFix - About Us</title>
            <AboutMission></AboutMission> 
            <AboutValues></AboutValues>
         </>

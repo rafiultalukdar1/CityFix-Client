@@ -64,37 +64,40 @@ const HowWorkPage = () => {
     ];
 
     return (
-        <div className='py-[55px] md:py-[70px] lg:py-[105px]'>
-            <div className='container mx-auto'>
-                <h2 className='leading-[1.2] text-[30px] sm:text-[40px] lg:text-[50px] font-bold text-center'>
-                    Reporting Made <span className='bg-linear-to-r from-[#10B77F] to-[#35E2A4] bg-clip-text text-transparent'>Simple</span>
-                </h2>
-                <p className='text-[16px] md:text-[18px] font-medium text-[#6D7873] text-center max-w-[620px] mx-auto pt-1.5'>
-                    CityFix makes it easy to report infrastructure issues and track their resolution. Follow these simple steps to help improve your community.
-                </p>
+        <>
+            <title>CityFix - How It Works</title>
+            <div className='py-[55px] md:py-[70px] lg:py-[105px]'>
+                <div className='container mx-auto'>
+                    <h2 className='leading-[1.2] text-[30px] sm:text-[40px] lg:text-[50px] font-bold text-center'>
+                        Reporting Made <span className='bg-linear-to-r from-[#10B77F] to-[#35E2A4] bg-clip-text text-transparent'>Simple</span>
+                    </h2>
+                    <p className='text-[16px] md:text-[18px] font-medium text-[#6D7873] text-center max-w-[620px] mx-auto pt-1.5'>
+                        CityFix makes it easy to report infrastructure issues and track their resolution. Follow these simple steps to help improve your community.
+                    </p>
 
-                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-12'>
-                    {steps.map((step, index) => {
-                        const Icon = step.Icon;
-                        return (
-                            <div key={index} className='bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition'>
-                                <div className='text-[42px] text-[#219E64] mb-2.5'>
-                                    <Icon />
+                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pt-12'>
+                        {steps.map((step, index) => {
+                            const Icon = step.Icon;
+                            return (
+                                <div key={index} className='bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition'>
+                                    <div className='text-[42px] text-[#219E64] mb-2.5'>
+                                        <Icon />
+                                    </div>
+                                    <h3 className='text-xl font-semibold mb-2'>{step.title}</h3>
+                                    <p className='text-gray-600 dark:text-gray-300 mb-2'>{step.description}</p>
+                                    <ul className='text-gray-600 dark:text-gray-300 mb-2'>
+                                        {step.features.map((feature, idx) => (
+                                            <li className='flex items-center gap-1.5' key={idx}><IoCheckmarkCircleOutline className='text-[#219E64]' /> {feature}</li>
+                                        ))}
+                                    </ul>
+                                    {step.note && <p className='text-sm font-medium text-[#219E64]'>{step.note}</p>}
                                 </div>
-                                <h3 className='text-xl font-semibold mb-2'>{step.title}</h3>
-                                <p className='text-gray-600 dark:text-gray-300 mb-2'>{step.description}</p>
-                                <ul className='text-gray-600 dark:text-gray-300 mb-2'>
-                                    {step.features.map((feature, idx) => (
-                                        <li className='flex items-center gap-1.5' key={idx}><IoCheckmarkCircleOutline className='text-[#219E64]' /> {feature}</li>
-                                    ))}
-                                </ul>
-                                {step.note && <p className='text-sm font-medium text-[#219E64]'>{step.note}</p>}
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -39,23 +39,21 @@ const ManageUsers = () => {
             <div className="px-3 py-12 max-w-[1600px] mx-auto">
                 <h2 className="text-[30px] md:text-[34px] lg:text-[40px] font-bold">Manage Users</h2>
                 <p className="text-[#6D7873] dark:text-[#E7F8F2] text-[16px] mb-5">View and manage citizen accounts.</p>
-
                 
-                
-                <div className="border border-[#219e64] rounded-xl overflow-x-scroll mt-3 md:mt-5 bg-[#FBFCFB] dark:bg-gray-900">
+                <div className="border border-[#219e64] rounded-xl overflow-x-scroll mt-3 md:mt-5 bg-[#FBFCFB]">
                     <table className="w-full min-w-[1200px] text-[16px]">
-                        <thead className="bg-gray-50 dark:bg-[#101828]">
-                        <tr className="text-left">
-                            <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">User</th>
-                            <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Email</th>
-                            <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Subscription</th>
-                            <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Status</th>
-                            <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Action</th>
-                        </tr>
+                        <thead className="bg-gray-50 dark:bg-gray-900">
+                            <tr className="text-left">
+                                <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">User</th>
+                                <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Email</th>
+                                <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Subscription</th>
+                                <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Status</th>
+                                <th className="p-4 text-[#6D7873] dark:text-[#E7F8F2]">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {citizens.map((user) => (
-                            <tr key={user._id} className="border-t border-[#219e64]">
+                            <tr key={user._id} className="border-t border-[#219e64] dark:bg-[#1D232A]">
                                 <td className="p-4 flex items-center gap-2 font-medium text-[#111827] dark:text-[#E7F8F2] text-[16px]">
                                     <img src={user.photo} alt={user.name} className="w-10 h-10 rounded-full" />
                                     {user.name}
@@ -64,16 +62,16 @@ const ManageUsers = () => {
                                 <td className="p-4">
                                     <span className={`px-3 py-1 rounded-full text-[14px] font-semibold
                                         ${user.isPremium 
-                                        ? 'border border-[#219E64] text-[#219E64] bg-[#68eeb02a]' 
-                                        : 'bg-[#fef9c27c] text-[#D08700] border border-[#D08700]'}`}>
+                                        ? 'border border-[#219E64] text-[#219E64] bg-[#68eeb02a] dark:text-white dark:border-white dark:bg-transparent' 
+                                        : 'bg-[#fef9c27c] text-[#D08700] border border-[#D08700] dark:text-white dark:border-white dark:bg-transparent'}`}>
                                         {user.isPremium ? 'Premium' : 'Free'}
                                     </span>
                                 </td>
                                 <td className="p-4">
                                     <span className={`px-3 py-1 rounded-full text-[14px] font-semibold
                                         ${user.isBlocked 
-                                        ? 'text-red-600 border border-red-600 bg-[#f08d922d]' 
-                                        : 'border border-[#219E64] text-[#219E64] bg-[#68eeb02a]'}`}>
+                                        ? 'text-red-600 border border-red-600 bg-[#f08d922d] dark:text-white dark:border-white dark:bg-transparent' 
+                                        : 'border border-[#219E64] text-[#219E64] bg-[#68eeb02a] dark:text-white dark:border-white dark:bg-transparent'}`}>
                                         {user.isBlocked ? 'Blocked' : 'Active'}
                                     </span>
                                 </td>

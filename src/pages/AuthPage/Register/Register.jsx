@@ -16,38 +16,6 @@ const Register = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    
-    // Form Register
-    // const handleRegister = (data) => {
-    //     const profileImg = data.photo[0];
-    //     createUser(data.email, data.password)
-    //         .then(() => {
-    //             const formData = new FormData();
-    //             formData.append('image', profileImg);
-    //             const img_Api_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_KEY}`;
-    //             axios.post(img_Api_URL, formData)
-    //                 .then(res => {
-    //                     const userProfile = {
-    //                         displayName: data.name,
-    //                         photoURL: res.data.data.display_url,
-    //                     };
-    //                     updateUserProfile(userProfile)
-    //                         .then(() => {
-    //                             navigate(location.state || '/');
-    //                             toast.success('Registration successful!');
-    //                         });
-    //                 })
-    //                 .catch(() => {
-    //                     toast.error('Image upload failed!');
-    //                 });
-    //         })
-    //         .catch(() => {
-    //             toast.error('Email already exists or invalid!');
-    //         });
-    // };
-
-    
-
     // Form Register
     const handleRegister = (data) => {
         const profileImg = data.photo[0];
