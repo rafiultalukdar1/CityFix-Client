@@ -3,37 +3,19 @@ import { MdAddCircle } from "react-icons/md";
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PuffLoader } from 'react-spinners';
-import { RiDeleteBinLine } from 'react-icons/ri';
-import { FaEye, FaEyeSlash, FaRegEdit } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import ManageStaffTable from './ManageStaffTable';
 
 const ManageStaff = () => {
-
     const axiosSecure = useAxiosSecure();
     const queryClient = useQueryClient();
     const [showPass, setShowPass] = useState(false);
-    const [editingStaff, setEditingStaff] = useState(null);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    // separate forms
-    const addForm = useForm();
-    const editForm = useForm();
-
-    const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors }
-    } = addForm;
-
-    const {
-        register: editRegister,
-        handleSubmit: handleEditSubmit,
-        reset: editReset,
-        formState: { errors: editErrors }
-    } = editForm;
-
-    const { data: staffs = [], isLoading } = useQuery({
+    const { data: staffs = [], isLoading, refetch } = useQuery({
         queryKey: ['staffs'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users-staff');
@@ -52,76 +34,54 @@ const ManageStaff = () => {
     // Create Staff
     const onSubmit = async (data) => {
         try {
+            if (!data.name || !data.email || !data.phone || !data.photo?.length || !data.password) {
+                toast.error('All fields are required');
+                return;
+            }
+            if (data.password.length < 6) {
+                toast.error('Password must be at least 6 characters');
+                return;
+            }
             const formData = new FormData();
             formData.append('image', data.photo[0]);
-
             const imgRes = await axios.post(
                 `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_KEY}`,
                 formData
             );
-
-            await axiosSecure.post('/users-staff', {
-                name: data.name,
-                email: data.email,
-                phone: data.phone,
-                password: data.password,
-                photo: imgRes.data.data.display_url
-            });
-
-            document.getElementById('addStaffModal').close();
-            reset();
-            queryClient.invalidateQueries(['staffs']);
-        } catch (err) {
-            console.error(err.response?.data?.message || err.message);
-        }
-    };
-
-    // Update Staff
-    const onUpdate = async (data) => {
-        try {
-            let photoURL = editingStaff.photo;
-
-            if (data.photo && data.photo.length > 0) {
-                const formData = new FormData();
-                formData.append('image', data.photo[0]);
-
-                const imgRes = await axios.post(
-                    `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_KEY}`,
-                    formData
-                );
-                photoURL = imgRes.data.data.display_url;
+            const photoURL = imgRes?.data?.data?.url;
+            if (!photoURL) {
+                toast.error('Image upload failed');
+                return;
             }
-
-            const payload = {
-                name: data.name,
-                phone: data.phone,
+            const staffData = {
+                name: data.name.trim(),
+                email: data.email.trim(),
+                phone: data.phone.trim(),
+                password: data.password,
                 photo: photoURL
             };
-
-            if (data.password) payload.password = data.password;
-
-            await axiosSecure.patch(`/users-staff/${editingStaff._id}`, payload);
-
-            document.getElementById('editStaffModal').close();
-            editReset();
-            setEditingStaff(null);
-            queryClient.invalidateQueries(['staffs']);
+            const res = await axiosSecure.post('/users-staff', staffData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (res.data?.success) {
+                toast.success('Staff created successfully');
+                reset();
+                document.getElementById('addStaffModal').close();
+                queryClient.invalidateQueries(['staffs']);
+            } else {
+                toast.error(res.data?.message || 'Failed to create staff');
+            }
         } catch (err) {
-            console.error(err.response?.data?.message || err.message);
+            toast.error(err.response?.data?.message || err.message);
         }
     };
 
-    // Open Edit Modal
-    const handleEditClick = (staff) => {
-        setEditingStaff(staff);
-        editReset({
-            name: staff.name,
-            phone: staff.phone,
-            photo: null,
-            password: ''
-        });
-        document.getElementById('editStaffModal').showModal();
-    };
+
+
+
+
 
     return (
         <>
@@ -142,7 +102,9 @@ const ManageStaff = () => {
                     </button>
                 </div>
 
-                <div className='border border-[#219e64] rounded-xl overflow-x-scroll mt-3 md:mt-5 bg-[#FBFCFB]'>
+                <ManageStaffTable staffs={staffs} refetchStaffs={refetch}></ManageStaffTable>
+
+                {/* <div className='border border-[#219e64] rounded-xl overflow-x-scroll mt-3 md:mt-5 bg-[#FBFCFB]'>
                     <table className="w-full min-w-[1200px] text-[16px]">
                         <thead className="bg-gray-50 dark:bg-gray-900">
                             <tr className="text-left">
@@ -172,86 +134,43 @@ const ManageStaff = () => {
                                             : '—'}
                                     </td>
                                     <td className='p-4'>
-                                        <button
-                                            onClick={() => handleEditClick(staff)}
-                                            className='py-2 px-2.5 rounded-md bg-gray-100 hover:bg-gray-300 border border-gray-300'
-                                        >
-                                            <FaRegEdit size={16} />
-                                        </button>
+                                        <div className='flex items-center gap-2.5'>
+                                            <button className='py-2 px-2.5 rounded-md bg-gray-100 hover:bg-gray-300 border border-gray-300'><FaRegEdit size={16} /></button>
+                                            <button className='py-2 px-2.5 rounded-md bg-red-600 hover:bg-red-500 text-white'><RiDeleteBinLine size={16} /></button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                </div>
+                </div> */}
 
-                {/* Add Staff Modal */}
+
+                {/* Create Staff */}
                 <dialog id="addStaffModal" className="modal modal-bottom sm:modal-middle">
                     <form onSubmit={handleSubmit(onSubmit)} className="modal-box flex flex-col gap-2.5">
                         <h3 className="font-bold text-[22px]">Add New Staff</h3>
-
-                        <input {...register('name', { required: 'Name is required' })} className="form-input" placeholder="Enter name" />
-                        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-
-                        <input {...register('email', { required: 'Email is required' })} type="email" className="form-input" placeholder="Enter email" />
-                        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-
-                        <input {...register('phone', { required: 'Phone is required' })} className="form-input" placeholder="Enter phone" />
-                        {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
-
-                        <input {...register('photo', { required: 'Photo is required' })} type="file" className="form-input" />
-                        {errors.photo && <p className="text-red-500 text-sm">{errors.photo.message}</p>}
-
+                        <input {...register('name', { required: true })} className="form-input" placeholder="Enter name" />
+                        {errors.name && <p className="text-red-500 text-sm">Name is required</p>}
+                        <input {...register('email', { required: true })} type="email" className="form-input" placeholder="Enter email" />
+                        {errors.email && <p className="text-red-500 text-sm">Email is required</p>}
+                        <input {...register('phone', { required: true })} className="form-input" placeholder="Enter phone" />
+                        {errors.phone && <p className="text-red-500 text-sm">Phone is required</p>}
+                        <input {...register('photo', { required: true })} type="file" className="form-input" />
+                        {errors.photo && <p className="text-red-500 text-sm">Photo is required</p>}
                         <div className="relative">
-                            <input {...register('password', { required: 'Password is required' })} type={showPass ? 'text' : 'password'} className="form-input" placeholder="Enter password" />
+                            <input {...register('password', { required: true, minLength: 6 })} type={showPass ? 'text' : 'password'} className="form-input" placeholder="Enter password"/>
                             <span onClick={() => setShowPass(!showPass)} className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer">
                                 {showPass ? <FaEyeSlash /> : <FaEye />}
                             </span>
+                            {errors.password && <p className="text-red-500 text-sm">Password is required & min 6 chars</p>}
                         </div>
-
                         <div className="modal-action">
                             <button type="submit" className="px-4 py-2 bg-[#219E64] text-white rounded-md">Create Staff</button>
                             <button type="button" onClick={() => document.getElementById('addStaffModal').close()} className="px-4 py-2 bg-gray-200 rounded-md">Cancel</button>
                         </div>
                     </form>
                 </dialog>
-
-                {/* Edit Staff Modal */}
-                <dialog id="editStaffModal" className="modal modal-bottom sm:modal-middle">
-                    <form onSubmit={handleEditSubmit(onUpdate)} className="modal-box flex flex-col gap-2.5">
-                        <h3 className="font-bold text-[22px]">Update Staff</h3>
-
-                        {editingStaff?.photo && (
-                            <img src={editingStaff.photo} alt="staff" className="w-12 h-12 rounded-full" />
-                        )}
-
-                        <input {...editRegister('name', { required: 'Name is required' })} className="form-input" />
-                        {editErrors.name && <p className="text-red-500 text-sm">{editErrors.name.message}</p>}
-
-                        <input {...editRegister('phone', { required: 'Phone is required' })} className="form-input" />
-                        {editErrors.phone && <p className="text-red-500 text-sm">{editErrors.phone.message}</p>}
-
-                        <input {...editRegister('photo')} type="file" className="form-input" />
-
-                        <input {...editRegister('password')} type="password" className="form-input" placeholder="New password (optional)" />
-
-                        <div className="modal-action">
-                            <button type="submit" className="px-4 py-2 bg-[#219E64] text-white rounded-md">Update Staff</button>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    document.getElementById('editStaffModal').close();
-                                    setEditingStaff(null);
-                                    editReset();
-                                }}
-                                className="px-4 py-2 bg-gray-200 rounded-md"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </dialog>
-
             </div>
         </>
     );

@@ -32,8 +32,6 @@ const MyProfile = () => {
         setLoading(true);
         try {
             let photoURL = profile.photo;
-
-            // Upload new photo if selected
             if (data.photo && data.photo[0]) {
                 const formData = new FormData();
                 formData.append('image', data.photo[0]);
@@ -43,20 +41,13 @@ const MyProfile = () => {
                 );
                 photoURL = res.data.data.display_url;
             }
-
-            // Prepare updated user data
             const updatedUser = {
                 name: data.name || profile.name,
                 email: profile.email,
                 photo: photoURL
             };
-
-            // Update on server
             await axiosSecure.put(`/users/${profile.email}`, updatedUser);
-
-            // Update AuthContext so Navbar shows new image
             updateUserProfile({ displayName: updatedUser.name, photoURL: updatedUser.photo });
-
             toast.success('Profile updated successfully!');
             refetch();
         } catch (err) {
