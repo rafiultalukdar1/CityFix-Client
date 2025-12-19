@@ -58,6 +58,31 @@ const MyProfile = () => {
         }
     };
 
+
+    // Subscription
+    const handleUpgrade = async () => {
+        try {
+            const amount = 10;
+            const res = await axiosSecure.post('/create-checkout-session', {
+                amount,
+                email: profile.email
+            });
+            if (res.data?.url) {
+                window.location.href = res.data.url; // Stripe checkout page
+            } else {
+                toast.error("Failed to initiate payment!");
+            }
+        } catch (err) {
+            console.error(err);
+            toast.error("Upgrade failed!");
+        }
+    };
+
+
+
+
+
+
     return (
         <>
             <title>CityFix - My Profile</title>
@@ -68,7 +93,7 @@ const MyProfile = () => {
                         <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Manage your account settings and subscription.</p>
                     </div>
 
-                    <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>
+                    {/* <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>
                         <div className='flex items-center gap-3.5'>
                             <div className='bg-[#E7F8F2] text-[#10B77F] p-2 md:p-4 rounded-md text-[22px] md:text-[28px]'>
                                 <FaRegChessQueen />
@@ -79,12 +104,34 @@ const MyProfile = () => {
                             </div>
                         </div>
                         <button className='px-3.5 py-1.5 rounded-md font-medium bg-[#219E64] hover:bg-[#0c7e49] transition text-white'>Upgrade</button>
-                    </div>
+                    </div> */}
+                    {!profile.isPremium && (
+                        <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>
+                            <div className='flex items-center gap-3.5'>
+                                <div className='bg-[#E7F8F2] text-[#10B77F] p-2 md:p-4 rounded-md text-[22px] md:text-[28px]'>
+                                    <FaRegChessQueen />
+                                </div>
+                                <div>
+                                    <h3 className='text-[20px] md:text-[24px] font-bold'>Free Plan</h3>
+                                    <p className='text-[16px] text-[#6D7873] dark:text-[#E7F8F2]'>Limited to 3 issue reports</p>
+                                </div>
+                            </div>
+                            <button onClick={handleUpgrade} className='px-3.5 py-1.5 rounded-md font-medium bg-[#219E64] hover:bg-[#0c7e49] transition text-white'>Upgrade</button>
+                        </div>
+                    )}
+
 
                     <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex flex-col gap-2.5'>
                         <div className='flex items-center gap-5'>
-                            <img src={user?.photoURL || "/default-avatar.png" } alt="Profile" className="w-15 sm:w-18 h-15 sm:h-18 rounded-full object-cover p-0.5 border border-[#219E64]" />
                             <div>
+                                <img src={user?.photoURL || "/default-avatar.png" } alt="Profile" className="w-15 sm:w-18 h-15 sm:h-18 rounded-full object-cover p-0.5 border border-[#219E64]" />
+                            </div>
+                            <div>
+                                {profile.isPremium && (
+                                    <div>
+                                        <p className='text-[12px] font-semibold uppercase bg-[#E7F8F2] text-[#10B77F] py-0.5 px-2.5 rounded-2xl border border-[#10B77F] inline'>Premium</p>
+                                    </div>
+                                )}
                                 <h4 className='text-[20px] font-semibold text-[#141414] dark:text-white'>{profile.name}</h4>
                                 <p className='text-[#6D7873] text-[15px]'>{profile.email}</p>
                             </div>

@@ -25,6 +25,8 @@ import ManageStaff from "../pages/AdminDashboard/ManageStaff";
 import Payments from "../pages/AdminDashboard/Payments";
 import AdminProfile from "../pages/AdminDashboard/AdminProfile";
 import CitizenPrivateRoute from "./CitizenPrivateRoute";
+import PaymentSuccess from "../pages/CitizenDashboard/PaymentSuccess";
+import PaymentCancel from "../pages/CitizenDashboard/PaymentCancel";
 
 export const router = createBrowserRouter([
     {
@@ -80,6 +82,14 @@ export const router = createBrowserRouter([
             {
                 path: 'my-profile',
                 element: <CitizenPrivateRoute><MyProfile></MyProfile></CitizenPrivateRoute>
+            },
+            {
+                path: '/dashboard/payment-success',
+                element: <CitizenPrivateRoute><PaymentSuccess></PaymentSuccess></CitizenPrivateRoute>
+            },
+            {
+                path: '/dashboard/payment-cancel',
+                element: <CitizenPrivateRoute><PaymentCancel></PaymentCancel></CitizenPrivateRoute>
             },
             {
                 path: 'staff',

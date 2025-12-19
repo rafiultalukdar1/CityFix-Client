@@ -79,10 +79,6 @@ const ManageStaff = () => {
     };
 
 
-
-
-
-
     return (
         <>
             <title>CityFix - Manage Staff</title>
@@ -103,48 +99,6 @@ const ManageStaff = () => {
                 </div>
 
                 <ManageStaffTable staffs={staffs} refetchStaffs={refetch}></ManageStaffTable>
-
-                {/* <div className='border border-[#219e64] rounded-xl overflow-x-scroll mt-3 md:mt-5 bg-[#FBFCFB]'>
-                    <table className="w-full min-w-[1200px] text-[16px]">
-                        <thead className="bg-gray-50 dark:bg-gray-900">
-                            <tr className="text-left">
-                                <th className="p-4">Staff</th>
-                                <th className="p-4">Email</th>
-                                <th className="p-4">Phone</th>
-                                <th className="p-4">Joined</th>
-                                <th className="p-4">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {staffs.map((staff) => (
-                                <tr key={staff._id} className="border-t border-[#219e64] dark:bg-[#1D232A]">
-                                    <td className="p-4 flex items-center gap-2">
-                                        <img src={staff.photo} alt={staff.name} className="w-10 h-10 rounded-full" />
-                                        {staff.name}
-                                    </td>
-                                    <td className="p-4">{staff.email}</td>
-                                    <td className="p-4">{staff.phone}</td>
-                                    <td className="p-4">
-                                        {staff.createdAt
-                                            ? new Date(staff.createdAt).toLocaleDateString('en-GB', {
-                                                day: '2-digit',
-                                                month: 'short',
-                                                year: 'numeric'
-                                            })
-                                            : '—'}
-                                    </td>
-                                    <td className='p-4'>
-                                        <div className='flex items-center gap-2.5'>
-                                            <button className='py-2 px-2.5 rounded-md bg-gray-100 hover:bg-gray-300 border border-gray-300'><FaRegEdit size={16} /></button>
-                                            <button className='py-2 px-2.5 rounded-md bg-red-600 hover:bg-red-500 text-white'><RiDeleteBinLine size={16} /></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div> */}
-
 
                 {/* Create Staff */}
                 <dialog id="addStaffModal" className="modal modal-bottom sm:modal-middle">

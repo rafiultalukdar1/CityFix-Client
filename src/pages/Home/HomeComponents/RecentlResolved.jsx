@@ -28,7 +28,8 @@ const RecentlResolved = () => {
         queryFn: async () => {
             const res = await axiosSecure.get('/users')
             return res.data
-        }
+        },
+        enabled: !!user
     });
     const isBlocked = dbUser?.isBlocked;
 
