@@ -27,6 +27,8 @@ import AdminProfile from "../pages/AdminDashboard/AdminProfile";
 import CitizenPrivateRoute from "./CitizenPrivateRoute";
 import PaymentSuccess from "../pages/CitizenDashboard/PaymentSuccess";
 import PaymentCancel from "../pages/CitizenDashboard/PaymentCancel";
+import BoostSuccess from "../pages/CitizenDashboard/BoostSuccess";
+import BoostCancel from "../pages/CitizenDashboard/BoostCancel";
 
 export const router = createBrowserRouter([
     {
@@ -90,6 +92,14 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/payment-cancel',
                 element: <CitizenPrivateRoute><PaymentCancel></PaymentCancel></CitizenPrivateRoute>
+            },
+            {
+                path: '/dashboard/boost-success',
+                element: <CitizenPrivateRoute><BoostSuccess></BoostSuccess></CitizenPrivateRoute>
+            },
+            {
+                path: '/dashboard/boost-cancel',
+                element: <CitizenPrivateRoute><BoostCancel></BoostCancel></CitizenPrivateRoute>
             },
             {
                 path: 'staff',

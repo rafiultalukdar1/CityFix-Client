@@ -123,8 +123,20 @@ const IssuesDetails = () => {
             const res = await axiosSecure.delete(`/issues/${id}`)
             if (res.data.deletedCount > 0) {
                 toast.success('Issue deleted')
-                refetch()
+                refetch();
+                return navigate('/dashboard/my-issues');
             }
+        }
+    };
+
+    // handle Boost Payment
+    const handleBoost = async (issueId) => {
+        try {
+            const res = await axiosSecure.post(`/boost-issue/${issueId}`);
+            window.location.assign(res.data.url);
+        } catch (err) {
+            console.error(err);
+            toast.error('Boost payment failed!');
         }
     };
 
@@ -188,7 +200,7 @@ const IssuesDetails = () => {
                                     <div className='hidden sm:block'></div>
                                     <div className='flex flex-wrap items-center gap-2.5'>
 
-                                        <button
+                                        {/* <button
                                             onClick={() => {
                                                 if (isBlocked) {
                                                     toast.error('Your account is blocked. You cannot boost issues.')
@@ -200,6 +212,15 @@ const IssuesDetails = () => {
                                             `}>
                                             <RiMoneyDollarCircleLine />
                                             <span>Boost Now</span>
+                                        </button> */}
+                                        <button
+                                            onClick={() => handleBoost(issue._id)}
+                                            disabled={issue.isBoosted || isBlocked}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-md text-white font-semibold transition
+                                                ${issue.isBoosted ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#F43098] hover:bg-[#c70e71]'}
+                                            `}>
+                                            <RiMoneyDollarCircleLine />
+                                            {issue.isBoosted ? 'Boosted' : 'Boost Now'}
                                         </button>
 
 

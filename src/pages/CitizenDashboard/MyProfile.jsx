@@ -14,8 +14,8 @@ const MyProfile = () => {
     const axiosSecure = useAxiosSecure();
     const { updateUserProfile, user } = useAuth();
     const [loading, setLoading] = useState(false);
-
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [upgrading, setUpgrading] = useState(false);
 
     // Fetch profile data from server
     const { data: profile, isLoading, refetch } = useQuery({
@@ -59,24 +59,24 @@ const MyProfile = () => {
     };
 
 
+
     // Subscription
     const handleUpgrade = async () => {
+        if (upgrading) return;
+        setUpgrading(true);
         try {
-            const amount = 10;
-            const res = await axiosSecure.post('/create-checkout-session', {
-                amount,
-                email: profile.email
-            });
-            if (res.data?.url) {
-                window.location.href = res.data.url; // Stripe checkout page
-            } else {
-                toast.error("Failed to initiate payment!");
-            }
+            const res = await axiosSecure.post('/create-checkout-session', { email: profile.email });
+            if (res.data?.url) window.location.href = res.data.url;
+            else toast.error("Failed to initiate payment!");
         } catch (err) {
             console.error(err);
             toast.error("Upgrade failed!");
+        } finally {
+            setUpgrading(false);
         }
     };
+
+
 
 
 

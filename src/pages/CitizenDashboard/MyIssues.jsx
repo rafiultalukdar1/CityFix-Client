@@ -124,6 +124,20 @@ const MyIssues = () => {
         }
     };
 
+    // handle Boost Payment
+    const handleBoost = async (issueId) => {
+        try {
+            const res = await axiosSecure.post(`/boost-issue/${issueId}`);
+            window.location.assign(res.data.url);
+        } catch (err) {
+            console.error(err);
+            toast.error('Boost payment failed!');
+        }
+    };
+
+
+
+
 
 
 
@@ -182,7 +196,7 @@ const MyIssues = () => {
                                     <div className='hidden sm:block'></div>
                                     <div className='flex flex-wrap items-center gap-2.5'>
 
-                                        <button
+                                        {/* <button
                                             onClick={() => {
                                                 if (isBlocked) {
                                                     toast.error('Your account is blocked. You cannot boost issues.')
@@ -194,7 +208,20 @@ const MyIssues = () => {
                                             `}>
                                             <RiMoneyDollarCircleLine />
                                             <span>Boost Now</span>
+                                        </button> */}
+
+                                        <button
+                                            onClick={() => handleBoost(issue._id)}
+                                            disabled={issue.isBoosted || isBlocked}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-md text-white font-semibold transition
+                                                ${issue.isBoosted ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#F43098] hover:bg-[#c70e71]'}
+                                            `}>
+                                            <RiMoneyDollarCircleLine />
+                                            {issue.isBoosted ? 'Boosted' : 'Boost Now'}
                                         </button>
+
+
+
 
 
                                         <Link to={`/issue-details/${issue._id}`} className='flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-md bg-[#219E64] hover:bg-[#0c7e49] transition text-[15px] text-white font-semibold'><FaEye /><span>View Details</span></Link>

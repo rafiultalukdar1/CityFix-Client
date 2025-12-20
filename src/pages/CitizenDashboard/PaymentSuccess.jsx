@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { FaCheckSquare } from 'react-icons/fa';
 
 const PaymentSuccess = ({ refetchProfile }) => {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const sessionId = searchParams.get('session_id');
-    const axiosSecure = useAxiosSecure();
-
+    const [searchParams] = useSearchParams();
+    const [paymentInfo, setPaymentInfo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [paymentInfo, setPaymentInfo] = useState(null);
+
+    const sessionId = searchParams.get("session_id");
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         if (!sessionId) return;
@@ -19,15 +19,21 @@ const PaymentSuccess = ({ refetchProfile }) => {
             try {
                 const res = await axiosSecure.post('/payment-success', { stripeSessionId: sessionId });
 
-                if (res.data.success) {
-                    setPaymentInfo(res.data);
+                if (res.data.success && res.data.paymentRecord) {
+                    const payment = res.data.paymentRecord;
+                    setPaymentInfo({
+                        transactionId: payment.transactionId,
+                        amount: payment.amount,
+                        currency: payment.currency,
+                        paidAt: payment.paidAt
+                    });
                     if (refetchProfile) refetchProfile();
                 } else {
-                    setError(res.data.message || "Payment failed");
+                    setError(res.data.message || "Payment not successful.");
                 }
             } catch (err) {
                 console.error(err);
-                setError(err.response?.data?.message || "Something went wrong");
+                setError(err.response?.data?.message || "Something went wrong.");
             } finally {
                 setLoading(false);
             }
@@ -36,21 +42,22 @@ const PaymentSuccess = ({ refetchProfile }) => {
         fetchPayment();
     }, [sessionId, axiosSecure, refetchProfile]);
 
-    if (loading) return <p className="text-center py-20">Processing payment...</p>;
-    if (error) return <p className="text-center py-20 text-red-500">{error}</p>;
+    if (loading) return <p className='text-center py-10'>Loading payment details...</p>;
+    if (error) return <p className='text-center py-10 text-red-500'>{error}</p>;
 
     return (
-        <div className="max-w-[800px] mx-auto py-20 px-4 text-center">
-            <h2 className="text-3xl font-bold mb-5">Payment Success ✅</h2>
+        <div className='max-w-[1550px] mx-auto py-[30px] md:py-[55px] px-[15px]'>
+            <h2 className='text-3xl font-bold mb-5 flex items-center gap-2.5'>Payment Success <FaCheckSquare className='text-[#219E64]'/></h2>
+
             {paymentInfo && (
-                <div className="bg-gray-100 p-5 rounded-md mb-5 space-y-2">
+                <div className='bg-gray-100 p-5 rounded-md space-y-2'>
                     <p><strong>Amount Paid:</strong> {paymentInfo.amount} {paymentInfo.currency?.toUpperCase()}</p>
-                    <p><strong>Status:</strong> Success</p>
+                    <p><strong>Transaction ID:</strong> {paymentInfo.transactionId}</p>
+                    <p><strong>Paid At:</strong> {new Date(paymentInfo.paidAt).toLocaleString()}</p>
                 </div>
             )}
-            <Link to="/dashboard/my-profile" className="btn bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                Back to Profile
-            </Link>
+
+            <Link to='/dashboard/my-profile' className='btn mt-5 bg-[#219E64] hover:bg-[#0c7e49] text-white'>Back to Profile</Link>
         </div>
     );
 };

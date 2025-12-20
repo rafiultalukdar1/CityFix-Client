@@ -24,6 +24,19 @@ const Citizen = () => {
         }
     });
 
+    const { data: payments = [] } = useQuery({
+        queryKey: ['myPayments'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/my-payments');
+            return res.data;
+        }
+    });
+
+    const paymentAmount = payments.reduce((sum, payment) => sum + payment.amount, 0);
+    const totalPaymentAmount = paymentAmount * 127.15;
+
+
+
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-[60vh]">
@@ -105,7 +118,7 @@ const Citizen = () => {
                     <div className='flex justify-between items-center bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 px-4 rounded-md lg:rounded-lg'>
                         <div>
                             <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Total Payments</p>
-                            <h3 className='text-[24px] md:text-[26px] lg:text-[30px] font-bold'>Payments</h3>
+                            <h3 className='text-[24px] md:text-[26px] lg:text-[28px] font-bold'>{totalPaymentAmount.toFixed(1)}</h3>
                         </div>
                         <div className='bg-[#E7F8F2] text-[#10B77F] p-3 rounded-md text-[20px] md:text-[22px]'>
                             <MdOutlinePayments />
