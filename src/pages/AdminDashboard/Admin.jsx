@@ -31,6 +31,17 @@ const AdminDashboard = () => {
     });
     const users = Array.isArray(usersData) ? usersData : [usersData];
 
+    const { data: payments = [] } = useQuery({
+        queryKey: ['adminPayments'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/admin-all-payments');
+            return res.data;
+        }
+    });
+
+    const paymentAmount = payments.reduce((sum, payment) => sum + (payment.amount || 0), 0 );
+    const totalPaymentAmount = paymentAmount * 127.15;
+
     if (issuesLoading || usersLoading) {
         return (
             <div className="flex justify-center items-center h-[60vh]">
@@ -53,7 +64,7 @@ const AdminDashboard = () => {
         { label: 'In-Progress', value: inProgressCount, icon: GiProgression },
         { label: 'Resolved', value: resolvedCount, icon: FaCheckCircle },
         { label: 'Rejected issue', value: '0', icon: IoMdCloseCircle },
-        { label: 'Total Payments', value: '0', icon: MdOutlinePayments },
+        { label: 'Total Payments', value: totalPaymentAmount.toFixed(1), icon: MdOutlinePayments },
         { label: 'Total Users', value: users.length, icon: FaUsers },
         { label: 'Staff Members', value: staffCount, icon: FaUsersCog },
     ];

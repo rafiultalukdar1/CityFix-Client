@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaUserPlus, FaCamera, FaUserCheck, FaSpinner, FaCheckCircle } from 'react-icons/fa';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const HowWorkPage = () => {
 
@@ -63,15 +65,24 @@ const HowWorkPage = () => {
         }
     ];
 
+    // AOS
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+        AOS.refresh();
+    }, []);
+
     return (
         <>
             <title>CityFix - How It Works</title>
             <div className='py-[55px] md:py-[70px] lg:py-[105px]'>
                 <div className='container mx-auto'>
-                    <h2 className='leading-[1.2] text-[30px] sm:text-[40px] lg:text-[50px] font-bold text-center'>
+                    <h2 data-aos="fade-up" className='leading-[1.2] text-[30px] sm:text-[40px] lg:text-[50px] font-bold text-center'>
                         Reporting Made <span className='bg-linear-to-r from-[#10B77F] to-[#35E2A4] bg-clip-text text-transparent'>Simple</span>
                     </h2>
-                    <p className='text-[16px] md:text-[18px] font-medium text-[#6D7873] text-center max-w-[620px] mx-auto pt-1.5'>
+                    <p data-aos="fade-up" className='text-[16px] md:text-[18px] font-medium text-[#6D7873] text-center max-w-[620px] mx-auto pt-1.5'>
                         CityFix makes it easy to report infrastructure issues and track their resolution. Follow these simple steps to help improve your community.
                     </p>
 
@@ -79,7 +90,7 @@ const HowWorkPage = () => {
                         {steps.map((step, index) => {
                             const Icon = step.Icon;
                             return (
-                                <div key={index} className='bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition'>
+                                <div data-aos="fade-up" key={index} className='bg-white dark:bg-gray-800 p-6 rounded-xl shadow hover:shadow-lg transition'>
                                     <div className='text-[42px] text-[#219E64] mb-2.5'>
                                         <Icon />
                                     </div>

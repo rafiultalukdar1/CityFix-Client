@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../hooks/useAuth';
@@ -7,6 +7,8 @@ import { FaEye, FaLocationDot } from 'react-icons/fa6';
 import { BiLike } from 'react-icons/bi';
 import { IoMdPricetags } from 'react-icons/io';
 import { toast } from 'react-toastify';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const AllIssuesPage = () => {
     const axiosSecure = useAxiosSecure();
@@ -43,7 +45,8 @@ const AllIssuesPage = () => {
         queryFn: async () => {
             const res = await axiosSecure.get('/users')
             return res.data
-        }
+        },
+        enabled: !!user
     });
     const isBlocked = dbUser?.isBlocked;
 
@@ -75,38 +78,43 @@ const AllIssuesPage = () => {
         setPage(1);
     };
 
+    // AOS
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+        AOS.refresh();
+    }, []);
+
 
     return (
         <>
             <title>CityFix - All Issues</title>
             <div className='py-[55px] md:py-[70px] lg:py-[105px]'>
                 <div className='container mx-auto'>
-                    <h2 className='text-center text-[30px] sm:text-[40px] lg:text-[50px] font-bold'>
-                        All Reported <span className='bg-linear-to-r from-[#10B77F] to-[#35E2A4] bg-clip-text text-transparent'>Issues</span>
-                    </h2>
-                    <p className='text-center text-[16px] md:text-[18px] font-medium text-[#6D7873] max-w-[620px] mx-auto pt-1.5'>
-                        Browse and upvote issues reported by citizens in your community.
-                    </p>
+                    <h2 data-aos="fade-up" className='text-center text-[30px] sm:text-[40px] lg:text-[50px] font-bold'>All Reported <span className='bg-linear-to-r from-[#10B77F] to-[#35E2A4] bg-clip-text text-transparent'>Issues</span></h2>
+                    <p data-aos="fade-up" className='text-center text-[16px] md:text-[18px] font-medium text-[#6D7873] max-w-[620px] mx-auto pt-1.5'>Browse and upvote issues reported by citizens in your community.</p>
 
                     {/* Search & Filters */}
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 lg:gap-5 mt-6 lg:mt-12'>
                         <div>
-                            <input type="text" placeholder="Search by title, category, location..." value={search} onChange={handleSearchChange} className='form-input'/>
+                            <input data-aos="fade-up" type="text" placeholder="Search by title, category, location..." value={search} onChange={handleSearchChange} className='form-input'/>
                         </div>
 
                         <div className='flex flex-col sm:flex-row items-center justify-between gap-3'>
-                            <select value={statusFilter} onChange={handleFilterChange(setStatusFilter)} className='form-input'>
+                            <select data-aos="fade-up" value={statusFilter} onChange={handleFilterChange(setStatusFilter)} className='form-input'>
                                 <option value="">All Status</option>
                                 <option value="pending">Pending</option>
                                 <option value="in-progress">In-Progress</option>
                                 <option value="resolved">Resolved</option>
                             </select>
-                            <select value={priorityFilter} onChange={handleFilterChange(setPriorityFilter)} className='form-input'>
+                            <select data-aos="fade-up" value={priorityFilter} onChange={handleFilterChange(setPriorityFilter)} className='form-input'>
                                 <option value="">All Priority</option>
                                 <option value="high">High</option>
                                 <option value="normal">Normal</option>
                             </select>
-                            <select value={categoryFilter} onChange={handleFilterChange(setCategoryFilter)} className='form-input'>
+                            <select data-aos="fade-up" value={categoryFilter} onChange={handleFilterChange(setCategoryFilter)} className='form-input'>
                                 <option value="">All Categories</option>
                                 <option value="electricity">Electricity</option>
                                 <option value="bridge">Bridge</option>
@@ -132,7 +140,7 @@ const AllIssuesPage = () => {
                             <div className='w-full text-center col-span-12 py-10 lg:py-20'><span className="loading loading-bars loading-xl"></span></div>
                         ) : (
                             issues.map(issue => (
-                                <div key={issue._id} className='shadow-sm dark:shadow-md rounded-lg bg-white dark:bg-[#1D232A] flex flex-col justify-between'>
+                                <div data-aos="fade-up" key={issue._id} className='shadow-sm dark:shadow-md rounded-lg bg-white dark:bg-[#1D232A] flex flex-col justify-between'>
                                     <div>
                                         <img src={issue.images} alt="" className='h-[242px] w-full object-cover rounded-t-lg' />
                                         <div className='pt-3 px-4 flex flex-col gap-3'>
@@ -148,8 +156,8 @@ const AllIssuesPage = () => {
                                     </div>
                                     <div className='pt-3 px-4 pb-4'>
                                         <div className='flex flex-col gap-1 border-b border-[#219e64e1] pb-3.5 mb-3.5'>
-                                            <p className='flex items-center gap-1.5 text-[16px] font-medium'><IoMdPricetags className='text-[16px] text-[#10B77F] capitalize' /><span>{issue.category}</span></p>
-                                            <p className='flex items-center gap-1.5 text-[16px] font-medium'><FaLocationDot className='text-[16px] text-[#10B77F]' /><span>{issue.location}</span></p>
+                                            <p className='flex items-center gap-1.5 text-[16px] font-medium capitalize'><IoMdPricetags className='text-[16px] text-[#10B77F] capitalize' /><span>{issue.category}</span></p>
+                                            <p className='flex items-center gap-1.5 text-[16px] font-medium capitalize'><FaLocationDot className='text-[16px] text-[#10B77F]' /><span>{issue.location}</span></p>
                                         </div>
                                         <div className='flex justify-between items-center'>
                                             {/* <button onClick={() => handleUpvote(issue._id)} className={`flex items-center gap-1.5 px-3.5 py-1 rounded-md border ${issue.upvotedUsers?.includes(user?.email) ? 'bg-[#219E64] text-white border-[#219E64]' : 'bg-gray-100 text-[#141414] border-gray-300'} font-medium transition`}>
@@ -192,7 +200,7 @@ const AllIssuesPage = () => {
                     </div>
 
                     {/* Pagination */}
-                    <div className='flex justify-center items-center gap-3 mt-7 lg:mt-12'>
+                    <div data-aos="fade-up" className='flex justify-center items-center gap-3 mt-7 lg:mt-12'>
                         <button onClick={handlePrev} disabled={page === 1} className='px-4 py-2 bg-[#219E64] rounded disabled:bg-gray-100 disabled:border-gray-300 disabled:border text-white disabled:text-[#141414]'>Previous</button>
                         <span className='font-medium'>Page {page} of {totalPages}</span>
                         <button onClick={handleNext} disabled={page === totalPages} className='px-4 py-2 bg-[#219E64] rounded disabled:bg-gray-100 disabled:border-gray-300 disabled:border text-white disabled:text-[#141414]'>Next</button>

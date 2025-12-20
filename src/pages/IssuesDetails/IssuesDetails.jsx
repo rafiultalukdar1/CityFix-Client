@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -14,6 +14,8 @@ import { useForm } from 'react-hook-form';
 import { PuffLoader } from 'react-spinners';
 import { RiDeleteBinLine, RiMoneyDollarCircleLine } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const IssuesDetails = () => {
 
@@ -23,6 +25,15 @@ const IssuesDetails = () => {
     const navigate = useNavigate();
     const [selectedIssueId, setSelectedIssueId] = React.useState(null);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+    // AOS
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+        AOS.refresh();
+    }, []);
 
     const { data: issue = {}, isLoading, refetch } = useQuery({
         queryKey: ['issueDetails', id],
@@ -140,9 +151,6 @@ const IssuesDetails = () => {
         }
     };
 
-    
-
-
 
     return (
         <>
@@ -151,10 +159,12 @@ const IssuesDetails = () => {
                 <div className='container'>
                     <div className='max-w-[890px] mx-auto'>
 
-                        <button onClick={() => navigate(-1)} className='flex items-center gap-1.5 text-[16px] font-medium text-[#65758B] dark:text-white'><FaArrowLeft /><span>Back</span></button>
+                        <button data-aos="fade-up" onClick={() => navigate(-1)} className='flex items-center gap-1.5 text-[16px] font-medium text-[#65758B] dark:text-white'><FaArrowLeft /><span>Back</span></button>
 
-                        <img className='h-[310px] sm:h-[380px] md:h-[470px] w-full object-cover rounded-lg md:rounded-2xl mt-5 md:mt-[30px] shadow-sm dark:shadow-white' src={issue.images} alt="" />
-                        <div className='p-3 sm:p-5 bg-white dark:bg-gray-900 border border-[#E1E7EF] dark:border-white rounded-lg md:rounded-2xl mt-5 lg:mt-7'>
+                        <div data-aos="fade-up">
+                            <img className='h-[310px] sm:h-[380px] md:h-[470px] w-full object-cover rounded-lg md:rounded-2xl mt-5 md:mt-[30px] shadow-sm dark:shadow-white' src={issue.images} alt="" />
+                        </div>
+                        <div data-aos="fade-up" className='p-3 sm:p-5 bg-white dark:bg-gray-900 border border-[#E1E7EF] dark:border-white rounded-lg md:rounded-2xl mt-5 lg:mt-7'>
                             <div className='flex items-center gap-3 mt-1 sm:mt-2'>
                                 <span className={`inline-block py-1 px-5 rounded-full text-[15px] font-medium capitalize ${issue.status === 'resolved' ? 'bg-[#E7F8F2] text-[#10B77F]' : issue.status === 'pending' ? 'bg-yellow-100 text-yellow-600' : 'bg-gray-100 text-gray-600'}`}>{issue.status}</span>
                                 <span className={`inline-block py-1 px-5 rounded-full text-[15px] font-medium capitalize ${issue.isBoosted ? 'bg-red-100 text-red-600' : 'bg-purple-100 text-purple-600'}`}>{issue.isBoosted ? 'High' : 'Normal'}</span>                                    
@@ -199,20 +209,7 @@ const IssuesDetails = () => {
                                 <div className='dark:border-white flex justify-between items-center pt-3 border-t border-[#219E64]'>
                                     <div className='hidden sm:block'></div>
                                     <div className='flex flex-wrap items-center gap-2.5'>
-
-                                        {/* <button
-                                            onClick={() => {
-                                                if (isBlocked) {
-                                                    toast.error('Your account is blocked. You cannot boost issues.')
-                                                    return
-                                                }
-                                            }}
-                                            className={`flex items-center gap-2 px-4 py-2 rounded-md text-white font-semibold transition
-                                                ${isBlocked ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#F43098] hover:bg-[#c70e71]'}
-                                            `}>
-                                            <RiMoneyDollarCircleLine />
-                                            <span>Boost Now</span>
-                                        </button> */}
+                                        
                                         <button
                                             onClick={() => handleBoost(issue._id)}
                                             disabled={issue.isBoosted || isBlocked}
@@ -222,7 +219,6 @@ const IssuesDetails = () => {
                                             <RiMoneyDollarCircleLine />
                                             {issue.isBoosted ? 'Boosted' : 'Boost Now'}
                                         </button>
-
 
                                         <button
                                             onClick={() => {
@@ -238,7 +234,6 @@ const IssuesDetails = () => {
                                             <FaRegEdit size={16} />
                                             <span>Update</span>
                                         </button>
-
 
                                         <button
                                             onClick={() => {
@@ -260,7 +255,7 @@ const IssuesDetails = () => {
                         </div>
 
                         {issue?.assignedStaff && (
-                        <div className='p-3 sm:p-5 bg-white dark:bg-gray-900 border border-[#E1E7EF] dark:border-white rounded-lg md:rounded-2xl mt-5 lg:mt-7'>
+                        <div data-aos="fade-up" className='p-3 sm:p-5 bg-white dark:bg-gray-900 border border-[#E1E7EF] dark:border-white rounded-lg md:rounded-2xl mt-5 lg:mt-7'>
                             <h2 className='text-[24px] md:text-[28px] lg:text-[30px] font-bold'>Assigned Staff</h2>
                             <div className='mt-4 mb-3 flex items-center gap-3'>
                                 <img src="https://i.ibb.co/rGTj1KFX/profile2.png" className='h-14 w-14 rounded-full object-cover' alt="" />
@@ -273,7 +268,7 @@ const IssuesDetails = () => {
                         </div>
                         )}
 
-                        <div className='p-3 sm:p-5 bg-white dark:bg-gray-900 border border-[#E1E7EF] dark:border-white rounded-lg md:rounded-2xl mt-5 lg:mt-7'>
+                        <div data-aos="fade-up" className='p-3 sm:p-5 bg-white dark:bg-gray-900 border border-[#E1E7EF] dark:border-white rounded-lg md:rounded-2xl mt-5 lg:mt-7'>
                             <h2 className='text-[24px] md:text-[28px] lg:text-[30px] font-bold mb-6'>Issue Timeline </h2>
                             <div className='relative border-l-2 border-[#10B77F] pl-6 space-y-6'>
                                 {[...(issue.timeline || [])]

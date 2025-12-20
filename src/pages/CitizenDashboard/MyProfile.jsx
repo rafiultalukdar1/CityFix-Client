@@ -8,6 +8,9 @@ import { toast } from 'react-toastify';
 import { FaRegChessQueen } from 'react-icons/fa6';
 import { IoIosCalendar } from 'react-icons/io';
 import { FaRegUserCircle } from 'react-icons/fa';
+import { FiDownload } from 'react-icons/fi';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PaymentInvoice from './PaymentInvoice';
 
 const MyProfile = () => {
     
@@ -58,8 +61,6 @@ const MyProfile = () => {
         }
     };
 
-
-
     // Subscription
     const handleUpgrade = async () => {
         if (upgrading) return;
@@ -77,12 +78,6 @@ const MyProfile = () => {
     };
 
 
-
-
-
-
-
-
     return (
         <>
             <title>CityFix - My Profile</title>
@@ -93,18 +88,6 @@ const MyProfile = () => {
                         <p className='text-[#6D7873] dark:text-[#E7F8F2] text-[16px]'>Manage your account settings and subscription.</p>
                     </div>
 
-                    {/* <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>
-                        <div className='flex items-center gap-3.5'>
-                            <div className='bg-[#E7F8F2] text-[#10B77F] p-2 md:p-4 rounded-md text-[22px] md:text-[28px]'>
-                                <FaRegChessQueen />
-                            </div>
-                            <div>
-                                <h3 className='text-[20px] md:text-[24px] font-bold'>Free Plan</h3>
-                                <p className='text-[16px] text-[#6D7873] dark:text-[#E7F8F2]'>Limited to 3 issue reports</p>
-                            </div>
-                        </div>
-                        <button className='px-3.5 py-1.5 rounded-md font-medium bg-[#219E64] hover:bg-[#0c7e49] transition text-white'>Upgrade</button>
-                    </div> */}
                     {!profile.isPremium && (
                         <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex justify-between items-center'>
                             <div className='flex items-center gap-3.5'>
@@ -122,20 +105,39 @@ const MyProfile = () => {
 
 
                     <div className='bg-[#FBFCFB] dark:bg-gray-900 shadow-sm py-3.5 md:py-8 px-4 md:px-8 rounded-lg lg:rounded-xl flex flex-col gap-2.5'>
-                        <div className='flex items-center gap-5'>
-                            <div>
-                                <img src={user?.photoURL || "/default-avatar.png" } alt="Profile" className="w-15 sm:w-18 h-15 sm:h-18 rounded-full object-cover p-0.5 border border-[#219E64]" />
+                        <div className='flex flex-col sm:flex-row sm:items-center gap-3 justify-between'>
+                            <div className='flex items-center gap-5'>
+                                <div>
+                                    <img src={user?.photoURL || "/default-avatar.png" } alt="Profile" className="w-15 sm:w-18 h-15 sm:h-18 rounded-full object-cover p-0.5 border border-[#219E64]" />
+                                </div>
+                                <div>
+                                    {profile.isPremium && (
+                                        <div>
+                                            <p className='text-[12px] font-semibold uppercase bg-[#E7F8F2] text-[#10B77F] py-0.5 px-2.5 rounded-2xl border border-[#10B77F] inline'>Premium</p>
+                                        </div>
+                                    )}
+                                    <h4 className='text-[20px] font-semibold text-[#141414] dark:text-white'>{profile.name}</h4>
+                                    <p className='text-[#6D7873] text-[15px]'>{profile.email}</p>
+                                </div>
                             </div>
                             <div>
-                                {profile.isPremium && (
-                                    <div>
-                                        <p className='text-[12px] font-semibold uppercase bg-[#E7F8F2] text-[#10B77F] py-0.5 px-2.5 rounded-2xl border border-[#10B77F] inline'>Premium</p>
-                                    </div>
+                                {/* <button className='inline-flex items-center gap-2 font-medium bg-gray-100 hover:bg-gray-300 text-[#141414] border border-gray-300 py-0.5 px-2.5 rounded'><FiDownload /><span>Invoice PDF</span></button> */}
+                                {/* <PDFDownloadLink document={<PaymentInvoice payment={profile.latestPayment} />} fileName={`invoice_${profile.latestPayment?.transactionId || 'payment'}.pdf`} className='inline-flex items-center gap-2 font-medium bg-gray-100 hover:bg-gray-300 text-[#141414] border border-gray-300 py-0.5 px-2.5 rounded'>
+                                {({ loading }) => (loading ? 'Loading...' : <><FiDownload /><span>Invoice PDF</span></>)}
+                                </PDFDownloadLink> */}
+                                {profile.latestPayment ? (
+                                    <PDFDownloadLink
+                                        document={<PaymentInvoice payment={profile.latestPayment} />}
+                                        fileName={`invoice_${profile.latestPayment.transactionId}.pdf`}
+                                        className='inline-flex items-center gap-2 font-medium bg-gray-100 hover:bg-gray-300 text-[#141414] border border-gray-300 py-0.5 px-2.5 rounded'>
+                                        {({ loading }) => (loading ? 'Loading...' : <><FiDownload /><span>Invoice PDF</span></>)}
+                                    </PDFDownloadLink>
+                                ) : (
+                                    <button disabled className='inline-flex items-center gap-2 ...'>No Payment</button>
                                 )}
-                                <h4 className='text-[20px] font-semibold text-[#141414] dark:text-white'>{profile.name}</h4>
-                                <p className='text-[#6D7873] text-[15px]'>{profile.email}</p>
                             </div>
                         </div>
+
                         <form onSubmit={handleSubmit(handleUpdate)} className='flex flex-col gap-2.5'>
                             <div>
                                 <label className='form-label'>Name</label>

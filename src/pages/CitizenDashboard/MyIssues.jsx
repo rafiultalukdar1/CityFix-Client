@@ -214,7 +214,7 @@ const MyIssues = () => {
                                             onClick={() => handleBoost(issue._id)}
                                             disabled={issue.isBoosted || isBlocked}
                                             className={`flex items-center gap-2 px-4 py-2 rounded-md text-white font-semibold transition
-                                                ${issue.isBoosted ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#F43098] hover:bg-[#c70e71]'}
+                                                ${issue.isBoosted ? 'bg-[#F59E0B] cursor-not-allowed' : 'bg-[#F43098] hover:bg-[#c70e71]'}
                                             `}>
                                             <RiMoneyDollarCircleLine />
                                             {issue.isBoosted ? 'Boosted' : 'Boost Now'}

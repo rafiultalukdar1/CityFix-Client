@@ -29,6 +29,7 @@ import PaymentSuccess from "../pages/CitizenDashboard/PaymentSuccess";
 import PaymentCancel from "../pages/CitizenDashboard/PaymentCancel";
 import BoostSuccess from "../pages/CitizenDashboard/BoostSuccess";
 import BoostCancel from "../pages/CitizenDashboard/BoostCancel";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
     {
@@ -138,5 +139,9 @@ export const router = createBrowserRouter([
                 element: <AdminPrivateRoute><AdminProfile></AdminProfile></AdminPrivateRoute>
             }
         ]
+    },
+    {
+        path: '*',
+        Component: ErrorPage,
     }
 ]);
