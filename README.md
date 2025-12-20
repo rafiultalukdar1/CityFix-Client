@@ -8,6 +8,11 @@ CityFix is a full-stack web application that allows citizens to report public in
 ## Live Website
 https://project-city-fix.netlify.app/
 
+
+## GitHub Repositories
+- Client Repository: https://github.com/rafiultalukdar1/CityFix-Client.git
+- Server Repository: https://github.com/rafiultalukdar1/CityFix-Server.git
+
 ---
 
 ## Demo Access Information
@@ -212,20 +217,3 @@ CityFix solves this problem by providing a centralized digital platform where:
 - Firebase Admin SDK
 - JWT
 - Stripe API
-
----
-
-## GitHub Repositories
-
-- Client Repository: https://github.com/rafiultalukdar1/CityFix-Client.git
-- Server Repository: https://github.com/rafiultalukdar1/CityFix-Server.git
-
----
-
-## Assignment Compliance
-
-- Minimum required GitHub commits completed.
-- All mandatory and challenge tasks implemented.
-- Fully responsive user interface.
-- Bug-free and production-ready application.
-- Deployed early and tested thoroughly.
