@@ -4,6 +4,9 @@ import RecentlResolved from './HomeComponents/RecentlResolved';
 import Powerful from './HomeComponents/Powerful';
 import HowItWorks from './HomeComponents/HowItWorks';
 import Difference from './HomeComponents/Difference';
+import Testimonials from './HomeComponents/Testimonials';
+import Trusted from './HomeComponents/Trusted';
+import Faq from './HomeComponents/Faq';
 
 const Home = () => {
     return (
@@ -14,6 +17,9 @@ const Home = () => {
             <Powerful></Powerful>
             <HowItWorks></HowItWorks>
             <Difference></Difference>
+            <Testimonials></Testimonials>
+            <Trusted></Trusted>
+            <Faq></Faq>
         </>
     );
 };
