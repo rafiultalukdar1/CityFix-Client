@@ -7,6 +7,7 @@ import Difference from './HomeComponents/Difference';
 import Testimonials from './HomeComponents/Testimonials';
 import Trusted from './HomeComponents/Trusted';
 import Faq from './HomeComponents/Faq';
+import Stay from './HomeComponents/Stay';
 
 const Home = () => {
     return (
@@ -20,6 +21,7 @@ const Home = () => {
             <Testimonials></Testimonials>
             <Trusted></Trusted>
             <Faq></Faq>
+            <Stay></Stay>
         </>
     );
 };

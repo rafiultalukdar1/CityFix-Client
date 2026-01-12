@@ -48,7 +48,7 @@ const Faq = () => {
                         <div>
                             <h2 data-aos="fade-up" className='leading-[1.2] text-[30px] sm:text-[40px] lg:text-[45px] font-bold'>Frequently Asked <span className='bg-linear-to-r from-[#10B77F] to-[#35E2A4] bg-clip-text text-transparent'>Questions</span></h2>
                             <p data-aos="fade-up" className='text-[20px] font-medium text-[#627084] mt-2 lg:mt-5'>Have questions about using CityFix? Find answers to the most common questions below. Can't find what you're looking for? Contact our support team.</p>
-                            <div className='mt-5 bg-[#F3FCFA] py-3 px-5 border border-[#22581aa4] rounded-lg'>
+                            <div data-aos="fade-up" className='mt-5 bg-[#F3FCFA] py-3 px-5 border border-[#22581aa4] rounded-lg'>
                                 <h4 className='font-medium text-[#141414] dark:text-white text-[18px]'>Still have questions?</h4>
                                 <p className='text-sm py-2'>Our support team is here to help you with any inquiries.</p>
                                 <button className='flex items-center gap-2 text-[#16BC84]'><span>Contact Support</span><FaArrowRight /></button>
@@ -56,7 +56,7 @@ const Faq = () => {
                         </div>
                         <div className='flex flex-col gap-3'>
                             {faqs.map((item, i) => (
-                                <div
+                                <div data-aos="fade-up"
                                     key={i}
                                     className="rounded-lg bg-white dark:bg-[#1D232A] shadow overflow-hidden"
                                 >

@@ -4,6 +4,7 @@ import { IoIosMail } from "react-icons/io";
 import { FaFacebookSquare, FaInstagram, FaPhoneVolume } from 'react-icons/fa';
 import { IoLocation } from 'react-icons/io5';
 import { BsTwitterX } from 'react-icons/bs';
+import { NavLink } from 'react-router';
 
 const Footer = () => {
     return (
@@ -19,9 +20,10 @@ const Footer = () => {
                         <div className='col-span-12 sm:col-span-6 lg:col-span-3'>
                             <h4 className='text-[21px] text-black dark:text-white font-semibold pb-[15px]'>Quick Links</h4>
                             <ul className='flex flex-col gap-3'>
-                                <li className='text-[18px] text-[#141414] dark:text-[#E9F7EF] font-medium'>Services</li>
-                                <li className='text-[18px] text-[#141414] dark:text-[#E9F7EF] font-medium'>Contact Us</li>
-                                <li className='text-[18px] text-[#141414] dark:text-[#E9F7EF] font-medium'>Privacy Policy</li>
+                                <li className='text-[18px] text-[#141414] dark:text-[#E9F7EF] font-medium'><NavLink to='/'>Home</NavLink></li>
+                                <li className='text-[18px] text-[#141414] dark:text-[#E9F7EF] font-medium'><NavLink to="/all-issues">All Issues</NavLink></li>
+                                <li className='text-[18px] text-[#141414] dark:text-[#E9F7EF] font-medium'><NavLink to="/how-it-works">How It Works</NavLink></li>
+                                <li className='text-[18px] text-[#141414] dark:text-[#E9F7EF] font-medium'><NavLink to="/about-us">About Us</NavLink></li>
                             </ul>
                         </div>
 
